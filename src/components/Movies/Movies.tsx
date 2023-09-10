@@ -15,13 +15,10 @@ const Movies = () => {
         setQuery(prev => ({...prev, page: prev.get('page')}))
     }, [query, dispatch, setQuery]);
 
-
-    console.log(movies)
-
     return (
-        <div>
-            {movies.results.map(movie => <Movie key={movie.id} movie={movie}/>)}
-        </div>
+       <div>
+           {movies.results.map(movie => <Movie key={movie.id} movie={movie}/>)}
+       </div>
     );
 };
 
