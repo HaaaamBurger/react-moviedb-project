@@ -5,13 +5,16 @@ body{
 .header{
     min-width: 600px;
     padding: 0 20px;
+    box-sizing: border-box;
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #656d83;
-    opacity: 80%;
+    opacity: 97%;
     height: 60px;
     box-shadow: 0px 3px 3px 0px rgb(68, 85, 107);
+    position: fixed;
+    width: 100%;
 }
 .header a{
     margin: 0 10px;

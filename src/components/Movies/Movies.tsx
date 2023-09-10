@@ -4,6 +4,7 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 import {movieActions} from "../../redux";
 import {useSearchParams} from "react-router-dom";
 import {Movie} from "../Movie";
+import css from './movies.module.css';
 
 const Movies = () => {
     const dispatch = useAppDispatch()
@@ -16,7 +17,7 @@ const Movies = () => {
     }, [query, dispatch, setQuery]);
 
     return (
-       <div>
+       <div className={css.moviesWrapper}>
            {movies.results.map(movie => <Movie key={movie.id} movie={movie}/>)}
        </div>
     );

@@ -1,6 +1,7 @@
 import React, {FC, PropsWithChildren} from 'react';
-import {IMovie} from "../../interfaces/movieInterface";
 
+import css from './movie.module.css';
+import {IMovie} from "../../interfaces/movieInterface";
 
 interface IProps extends PropsWithChildren {
     movie: IMovie
@@ -10,7 +11,7 @@ const Movie: FC<IProps> = ({movie}) => {
     const moviePoster = `https://image.tmdb.org/t/p/w500${movie.poster_path}`
 
     return (
-        <div>
+        <div className={css.movieWrapper}>
             <img src={moviePoster} alt={movie.title}/>
         </div>
     );
