@@ -3,7 +3,8 @@ import React from 'react';
 import css from './header.module.css';
 
 import {NavLink} from "react-router-dom";
-import {FormControlLabel, FormGroup, styled, Switch} from "@mui/material";
+import {Avatar, FormControlLabel, FormGroup, styled, Switch} from "@mui/material";
+import {deepOrange, deepPurple} from "@mui/material/colors";
 
 const MaterialUISwitch = styled(Switch)(({theme}) => ({
     width: 62,
@@ -61,12 +62,17 @@ const Header = () => {
                 <NavLink to={'genres'}>Genres</NavLink>
                 <NavLink to={'search'}>Search</NavLink>
             </div>
-            <div>
-                <FormGroup>
-                    <FormControlLabel
-                        control={<MaterialUISwitch sx={{m: 1}} defaultChecked/>}
-                        label={''}/>
-                </FormGroup>
+            <div style={{display: 'flex', alignItems: 'center'}}>
+                <div>
+                    <FormGroup>
+                        <FormControlLabel
+                            control={<MaterialUISwitch sx={{m: 1}} defaultChecked/>}
+                            label={''}/>
+                    </FormGroup>
+                </div>
+                <div>
+                    <Avatar sx={{ bgcolor: deepPurple[500] }}>N</Avatar>
+                </div>
             </div>
         </div>
     );

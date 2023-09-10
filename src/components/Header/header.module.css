@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Nova+Cut&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed&display=swap');
 body{
     margin: 0;
 }
 .header{
+    min-width: 600px;
     padding: 0 20px;
     display: flex;
     justify-content: space-between;
@@ -17,14 +17,14 @@ body{
     margin: 0 10px;
     text-decoration: none;
     color: azure;
-    font-size: 1.2em;
-    font-family: 'Nova Cut', cursive;
+    font-size: 1.6em;
+    font-family: 'Barlow Condensed', sans-serif;
 }
 .header_nav{
     display: flex;
 }
 .header a[class='active']{
-    text-decoration: underline ;
+    text-decoration: underline;
 }
 
 
