@@ -6,9 +6,8 @@ import {IMovie} from "../../interfaces/movieInterface";
 
 interface IState {
     movies: IMovies<IMovie>;
-    errRespond?: {
-        errors: string[],
-        success: string
+    errRespond: {
+        errors?: string[]
     }
 }
 
@@ -44,13 +43,12 @@ const movieSlice = createSlice({
     extraReducers: builder => builder
         .addCase(all.fulfilled, (state, action) => {
             state.movies = action.payload;
-        })
-        .addCase(all.rejected, (state, action) => {
-            state.errRespond.errors = action.payload
-        })
-        .addMatcher(isFulfilled(), (state, action) => {
             state.errRespond = null;
         })
+        .addCase(all.rejected, (state, action) => {
+            state.errRespond = action.payload
+        })
+
 })
 
 const {reducer: movieReducer, actions: {setMoviePage}} = movieSlice;

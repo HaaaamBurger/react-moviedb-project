@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import css from './header.module.css';
 
 import {NavLink} from "react-router-dom";
-import {Avatar, FormControlLabel, FormGroup, styled, Switch} from "@mui/material";
-import {deepOrange, deepPurple} from "@mui/material/colors";
+import {Alert, Avatar, FormControlLabel, FormGroup, Stack, styled, Switch} from "@mui/material";
+import {deepPurple} from "@mui/material/colors";
+import {useAppSelector} from "../../hooks";
 
 const MaterialUISwitch = styled(Switch)(({theme}) => ({
     width: 62,
@@ -53,12 +54,25 @@ const MaterialUISwitch = styled(Switch)(({theme}) => ({
     },
 }));
 
+
 const Header = () => {
+    const {errRespond} = useAppSelector(state => state.movieReducer);
+    const [pageError, setPageError] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (errRespond?.errors) {
+            setPageError(true)
+            setTimeout(() => {
+                setPageError(false);
+            }, 2000)
+        }
+    }, [errRespond]);
+
     return (
         <div className={css.header}>
-            <NavLink to={'movies'} style={{textDecoration:'none'}}>Movie DB</NavLink>
+            <NavLink to={'movies?page=1'} style={{textDecoration: 'none'}}>Movie DB</NavLink>
             <div className={css.header_nav}>
-                <NavLink to={'movies'}>Movies</NavLink>
+                <NavLink to={'movies?page=1'}>Movies</NavLink>
                 <NavLink to={'genres'}>Genres</NavLink>
                 <NavLink to={'search'}>Search</NavLink>
             </div>
@@ -71,8 +85,17 @@ const Header = () => {
                     </FormGroup>
                 </div>
                 <div>
-                    <Avatar sx={{ bgcolor: deepPurple[500] }}>N</Avatar>
+                    <Avatar sx={{bgcolor: deepPurple[500]}}>N</Avatar>
                 </div>
+            </div>
+            <div className={css.errorPos}>
+                {pageError && (
+                    <div>
+                        <Stack sx={{width: '100%'}} spacing={2}>
+                            <Alert severity="error">Paging error!</Alert>
+                        </Stack>
+                    </div>
+                )}
             </div>
         </div>
     );

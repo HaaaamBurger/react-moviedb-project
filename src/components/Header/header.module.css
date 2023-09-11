@@ -29,5 +29,9 @@ body{
 .header a[class='active']{
     text-decoration: underline;
 }
-
+.errorPos{
+    top: 100px;
+    right: 50px;
+    position: absolute;
+}
 

@@ -15,7 +15,7 @@ const AppPagination = () => {
         <div className={css.appPaginationWrapper}>
             <div>
                 <Stack spacing={2}>
-                    <Pagination count={500} variant="outlined" shape="rounded" color={"standard"} onChange={handlePagination} page={+query.get('page')}/>
+                    <Pagination count={500} variant="outlined" shape="rounded" color={"standard"} onChange={handlePagination} page={+query.get('page')} />
                 </Stack>
             </div>
         </div>
