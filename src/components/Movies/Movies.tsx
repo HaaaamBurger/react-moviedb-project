@@ -12,7 +12,7 @@ const Movies = () => {
     const [query, setQuery] = useSearchParams({page: '1'})
 
     useEffect(() => {
-        dispatch(movieActions.all({id: query.get('page')}));
+        dispatch(movieActions.allMovies({id: query.get('page')}));
         setQuery(prev => ({...prev, page: prev.get('page')}))
     }, [query, dispatch, setQuery]);
 

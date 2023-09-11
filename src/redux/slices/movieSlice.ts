@@ -3,12 +3,14 @@ import {IMovies} from "../../interfaces";
 import {movieServices} from "../../services/movieServices";
 import {AxiosError} from "axios";
 import {IMovie} from "../../interfaces/movieInterface";
+import {IGenre, IGenres} from "../../interfaces/genresInterface";
 
 interface IState {
     movies: IMovies<IMovie>;
     errRespond: {
         errors?: string[]
-    }
+    },
+    // genres: IMovies<IMovie>
 }
 
 const initialState: IState = {
@@ -16,10 +18,24 @@ const initialState: IState = {
         page: 1,
         results: []
     },
-    errRespond: null
+    errRespond: null,
+    // genres: []
 }
 
-const all = createAsyncThunk<IMovies<IMovie>, { id: string }>(
+// const allGenres = createAsyncThunk<IGenres<IGenre[]>,void>(
+//     'allGenres',
+//     async (_, {rejectWithValue}) => {
+//         try {
+//             const {data} = await movieServices.getGenres();
+//             return data.genres;
+//         }catch (e) {
+//             const err = e as AxiosError;
+//             return rejectWithValue(err.response.data);
+//         }
+//     }
+// )
+
+const allMovies = createAsyncThunk<IMovies<IMovie>, { id: string }>(
     'movieSlice/all',
     async ({id}, {rejectWithValue}) => {
         try {
@@ -41,11 +57,11 @@ const movieSlice = createSlice({
         }
     },
     extraReducers: builder => builder
-        .addCase(all.fulfilled, (state, action) => {
+        .addCase(allMovies.fulfilled, (state, action) => {
             state.movies = action.payload;
             state.errRespond = null;
         })
-        .addCase(all.rejected, (state, action) => {
+        .addCase(allMovies.rejected, (state, action) => {
             state.errRespond = action.payload
         })
 
@@ -55,7 +71,7 @@ const {reducer: movieReducer, actions: {setMoviePage}} = movieSlice;
 
 const movieActions = {
     setMoviePage,
-    all
+    allMovies
 }
 
 export {

@@ -1,0 +1,24 @@
+.movieInfoWrapper{
+    width: 100%;
+    padding-top: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.movieHeader{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 550px;
+    width: 100%;
+    padding: 20px 20% 20px 20%;
+    background-color: #333750;
+}
+.movieHeader img{
+    width: 340px;
+    border-radius: 10px;
+}
+.movieInfo{
+    color: aliceblue;
+    margin-left: 40px;
+}
