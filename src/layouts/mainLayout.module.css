@@ -1,3 +1,9 @@
 body{
-    background-color: #a3b1c4;
+    /*background-color: #dad6d6;*/
+    background: rgb(51,60,83);
+    background: linear-gradient(0deg, rgba(51,60,83,1) 0%, rgba(149,162,194,1) 100%);
+}
+
+.themeSwitcher{
+    background-color: #272733;
 }
