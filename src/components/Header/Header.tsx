@@ -5,7 +5,8 @@ import css from './header.module.css';
 import {NavLink} from "react-router-dom";
 import {Alert, Avatar, FormControlLabel, FormGroup, Stack, styled, Switch} from "@mui/material";
 import {deepPurple} from "@mui/material/colors";
-import {useAppSelector} from "../../hooks";
+import {useAppDispatch, useAppSelector} from "../../hooks";
+import {themeActions} from "../../redux";
 
 const MaterialUISwitch = styled(Switch)(({theme}) => ({
     width: 62,
@@ -54,9 +55,11 @@ const MaterialUISwitch = styled(Switch)(({theme}) => ({
     },
 }));
 
-
 const Header = () => {
+    const dispatch = useAppDispatch();
+    const {status} = useAppSelector(state => state.themeReducer);
     const {errRespond} = useAppSelector(state => state.movieReducer);
+
     const [pageError, setPageError] = useState<boolean>(false);
 
     useEffect(() => {
@@ -68,6 +71,12 @@ const Header = () => {
         }
     }, [errRespond]);
 
+    const [checked, setChecked] = useState<boolean>(status);
+
+    const handleChangeSwitch = (event: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch(themeActions.setThemeStatus(event.target.checked))
+    };
+
     return (
         <div className={css.header}>
             <NavLink to={'movies?page=1'} style={{textDecoration: 'none'}}>Movie DB</NavLink>
@@ -78,7 +87,7 @@ const Header = () => {
             </div>
             <div style={{display: 'flex', alignItems: 'center'}}>
                 <div>
-                    <FormGroup>
+                    <FormGroup onChange={handleChangeSwitch}>
                         <FormControlLabel
                             control={<MaterialUISwitch sx={{m: 1}} defaultChecked/>}
                             label={''}/>

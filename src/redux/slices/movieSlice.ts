@@ -54,6 +54,9 @@ const movieSlice = createSlice({
     reducers: {
         setMoviePage: (state, action) => {
             state.movies.page = action.payload
+        },
+        setError: (state, action) => {
+            state.errRespond = action.payload
         }
     },
     extraReducers: builder => builder
@@ -69,12 +72,13 @@ const movieSlice = createSlice({
         })
 })
 
-const {reducer: movieReducer, actions: {setMoviePage}} = movieSlice;
+const {reducer: movieReducer, actions: {setMoviePage,setError}} = movieSlice;
 
 const movieActions = {
     setMoviePage,
     allMovies,
-    allGenres
+    allGenres,
+    setError
 }
 
 export {
