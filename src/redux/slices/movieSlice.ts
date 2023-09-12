@@ -10,7 +10,7 @@ interface IState {
     errRespond: {
         errors?: string[]
     },
-    // genres: IMovies<IMovie>
+    genres: IGenre[]
 }
 
 const initialState: IState = {
@@ -19,10 +19,10 @@ const initialState: IState = {
         results: []
     },
     errRespond: null,
-    // genres: []
+    genres: []
 }
 
-// const allGenres = createAsyncThunk<IGenres<IGenre[]>,void>(
+// const allGenres = createAsyncThunk<<IGenre[]>,void>(
 //     'allGenres',
 //     async (_, {rejectWithValue}) => {
 //         try {

@@ -6,7 +6,7 @@ import {IGenre, IGenres} from "../interfaces/genresInterface";
 
 const movieServices = {
     getMoviesById: (id: string): IRes<IMovies<IMovie>> => apiService.get(urls.moviesById(id)),
-    getGenres: ():IRes<IGenres<IGenre[]>> => apiService.get(urls.getGenres)
+    getGenres: ():IRes<IGenres<IGenre>> => apiService.get(urls.getGenres)
 }
 
 export {
