@@ -7,6 +7,7 @@ import {Alert, Avatar, FormControlLabel, FormGroup, Stack, styled, Switch} from 
 import {deepPurple} from "@mui/material/colors";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {themeActions} from "../../redux";
+import {SearchField} from "./searchField";
 
 const MaterialUISwitch = styled(Switch)(({theme}) => ({
     width: 62,
@@ -79,7 +80,10 @@ const Header = () => {
 
     return (
         <div className={css.header}>
-            <NavLink to={'movies?page=1'} style={{textDecoration: 'none'}}>Movie DB</NavLink>
+            <div style={{display: 'flex'}}>
+                <NavLink to={'movies?page=1'} style={{textDecoration: 'none'}}>Movie DB</NavLink>
+                <SearchField/>
+            </div>
             <div className={css.header_nav}>
                 <NavLink to={'movies?page=1'}>Movies</NavLink>
                 <NavLink to={'genres'}>Genres</NavLink>

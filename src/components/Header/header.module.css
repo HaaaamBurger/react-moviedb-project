@@ -2,6 +2,10 @@
 body{
     margin: 0;
 }
+.header div:first-child{
+    display: flex;
+    align-items: center;
+}
 .header{
     min-width: 600px;
     padding: 0 20px;
@@ -9,10 +13,10 @@ body{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #3b4867;
+    background-color: #2e364f;
     opacity: 97%;
     height: 60px;
-    box-shadow: 0px 3px 3px 0px rgb(25, 28, 63);
+    box-shadow: 0px 3px 3px 0px rgb(20, 22, 42);
     position: fixed;
     width: 100%;
     font-family: 'Barlow', sans-serif;

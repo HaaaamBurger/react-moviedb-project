@@ -9,13 +9,14 @@ const MovieMainLayout = () => {
     const {status} = useAppSelector(state => state.themeReducer);
     const body = document.getElementsByTagName('body')[0];
 
+
     if (!status) {
         body.classList.add(css.themeSwitcher)
+        // header.classList.add(css.headerTheme)
     }
     else {
         body.classList.remove(css.themeSwitcher)
     }
-
 
     return (
         <div className={css.mainLayoutWrapper}>

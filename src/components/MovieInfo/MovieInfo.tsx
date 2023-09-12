@@ -7,7 +7,7 @@ import {movieActions} from "../../redux";
 import {IGenre} from "../../interfaces/genresInterface";
 import ThumbsUpDownIcon from '@mui/icons-material/ThumbsUpDown';
 import StarIcon from '@mui/icons-material/Star';
-import {StarRating} from "./starRating";
+import {Box, Rating, Typography} from "@mui/material";
 
 const MovieInfo = () => {
     //Виведення данних зі стейті в хеддер для того, щоб користувач зразу мав доступ до інформації
@@ -42,7 +42,7 @@ const MovieInfo = () => {
                     <h2>{movie.title}</h2>
                     <div className={css.genreBar}>
                         {movie.release_date}・
-                        {currentMovieGenres.map((movieGenre,index )=> {
+                        {currentMovieGenres.map((movieGenre )=> {
                             return <a key={movieGenre.id}>
                                 {currentMovieGenres[currentMovieGenres.length - 1].id === movieGenre.id ? movieGenre.name : `${movieGenre.name},`}
                             </a>}
@@ -63,7 +63,14 @@ const MovieInfo = () => {
                             </div>
                         </div>
                         <div>
-                            <StarRating/>
+                            <Box
+                                sx={{
+                                    '& > legend': { mt: 2 },
+                                }}
+                            >
+                                <Typography component="legend"></Typography>
+                                <Rating name="customized-10" defaultValue={movie.vote_average} max={10} />
+                            </Box>
                         </div>
                     </div>
                     <div className={css.overview}>
