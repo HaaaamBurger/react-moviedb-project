@@ -22,18 +22,18 @@ const initialState: IState = {
     genres: []
 }
 
-// const allGenres = createAsyncThunk<<IGenre[]>,void>(
-//     'allGenres',
-//     async (_, {rejectWithValue}) => {
-//         try {
-//             const {data} = await movieServices.getGenres();
-//             return data.genres;
-//         }catch (e) {
-//             const err = e as AxiosError;
-//             return rejectWithValue(err.response.data);
-//         }
-//     }
-// )
+const allGenres = createAsyncThunk<IGenre[],void>(
+    'allGenres',
+    async (_, {rejectWithValue}) => {
+        try {
+            const {data} = await movieServices.getGenres();
+            return data.genres;
+        }catch (e) {
+            const err = e as AxiosError;
+            return rejectWithValue(err.response.data);
+        }
+    }
+)
 
 const allMovies = createAsyncThunk<IMovies<IMovie>, { id: string }>(
     'movieSlice/all',
@@ -64,14 +64,17 @@ const movieSlice = createSlice({
         .addCase(allMovies.rejected, (state, action) => {
             state.errRespond = action.payload
         })
-
+        .addCase(allGenres.fulfilled,(state, action) => {
+            state.genres = action.payload
+        })
 })
 
 const {reducer: movieReducer, actions: {setMoviePage}} = movieSlice;
 
 const movieActions = {
     setMoviePage,
-    allMovies
+    allMovies,
+    allGenres
 }
 
 export {
