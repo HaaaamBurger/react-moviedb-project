@@ -7,7 +7,9 @@ import {IGenre, IGenres} from "../interfaces/genresInterface";
 const movieServices = {
     getMoviesById: (id: string): IRes<IMovies<IMovie>> => apiService.get(urls.moviesByPage(id)),
     getGenres: (): IRes<IGenres<IGenre>> => apiService.get(urls.getGenres),
-    getSearchMovie: (keyword: string): IRes<IMovies<IMovie>> => apiService.get(urls.getByKeyword, keyword)
+    // getSearchMovie: (keyword: string): IRes<IMovies<IMovie>> => apiService.get(urls.getByKeyword, {
+    //     params: {keyword}
+    // })
 }
 
 export {

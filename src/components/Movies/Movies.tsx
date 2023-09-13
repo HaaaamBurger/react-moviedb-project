@@ -5,6 +5,7 @@ import {movieActions} from "../../redux";
 import {useSearchParams} from "react-router-dom";
 import {Movie} from "../Movie";
 import css from './movies.module.css';
+import {movieServices} from "../../services/movieServices";
 
 
 const Movies = () => {
@@ -12,8 +13,11 @@ const Movies = () => {
     const {movies, errRespond, movieForSearch} = useAppSelector(state => state.movieReducer);
     const [query, setQuery] = useSearchParams({page: '1'})
 
-    useEffect(() => {
-    }, []);
+    // useEffect(() => {
+    //    fetch('https://api.themoviedb.org/3/search/movie?query=war&api_key=657c7ca56f4858ad333da131d8b07962')
+    //        .then(response => response.json())
+    //        .then(data => console.log(data))
+    // }, []);
 
     useEffect(() => {
         dispatch(movieActions.allMovies({id: query.get('page')}));
