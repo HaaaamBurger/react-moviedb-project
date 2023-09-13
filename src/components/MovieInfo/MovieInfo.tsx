@@ -2,12 +2,13 @@ import React, {useEffect, useState} from 'react';
 
 import css from './movieInfo.module.css';
 import {useAppDispatch, useAppLocation, useAppSelector} from "../../hooks";
-import {IMovie} from "../../interfaces/movieInterface";
+
 import {movieActions} from "../../redux";
 import {IGenre} from "../../interfaces/genresInterface";
 import ThumbsUpDownIcon from '@mui/icons-material/ThumbsUpDown';
 import StarIcon from '@mui/icons-material/Star';
 import {Box, Rating, Typography} from "@mui/material";
+import {IMovie} from "../../interfaces";
 
 const MovieInfo = () => {
     //Виведення данних зі стейті в хеддер для того, щоб користувач зразу мав доступ до інформації
@@ -30,13 +31,12 @@ const MovieInfo = () => {
 
     //Запит на додаткову інформації про фільм, яка вже буде підгружатись
 
-    console.log(movie)
 
     return (
         <div className={css.movieInfoWrapper}>
             <div className={css.movieHeader}>
                 <div>
-                    <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt=""/>
+                    <img src={`https://image.tmdb.org/t/p/w500${movie?.poster_path}`} alt=""/>
                 </div>
                 <div className={css.movieInfo}>
                     <h2>{movie.title}</h2>
@@ -69,7 +69,7 @@ const MovieInfo = () => {
                                 }}
                             >
                                 <Typography component="legend"></Typography>
-                                <Rating name="customized-10" defaultValue={movie.vote_average} max={10} />
+                                <Rating name="customized-10" readOnly defaultValue={movie.vote_average} max={10} />
                             </Box>
                         </div>
                     </div>

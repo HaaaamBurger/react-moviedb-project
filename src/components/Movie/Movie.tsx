@@ -1,8 +1,9 @@
 import React, {FC, PropsWithChildren} from 'react';
 
 import css from './movie.module.css';
-import {IMovie} from "../../interfaces/movieInterface";
+
 import {useNavigate} from "react-router-dom";
+import {IMovie} from "../../interfaces";
 
 interface IProps extends PropsWithChildren {
     movie: IMovie

@@ -2,11 +2,11 @@ import React, {useEffect, useState} from 'react';
 
 import css from './header.module.css';
 
-import {NavLink, useLocation} from "react-router-dom";
-import {Alert, Avatar, Button, FormControlLabel, FormGroup, Stack, styled, Switch} from "@mui/material";
+import {NavLink} from "react-router-dom";
+import {Alert, Avatar, Chip, FormControlLabel, FormGroup, Stack, styled, Switch} from "@mui/material";
 import {deepPurple} from "@mui/material/colors";
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {themeActions} from "../../redux";
+import {movieActions, themeActions} from "../../redux";
 import {SearchField} from "./searchField";
 
 const MaterialUISwitch = styled(Switch)(({theme}) => ({
@@ -60,7 +60,7 @@ const Header = () => {
     const dispatch = useAppDispatch();
     const {status} = useAppSelector(state => state.themeReducer);
 
-    const {errRespond} = useAppSelector(state => state.movieReducer);
+    const {errRespond,movieForSearch} = useAppSelector(state => state.movieReducer);
 
     const [pageError, setPageError] = useState<boolean>(false);
 
@@ -79,11 +79,22 @@ const Header = () => {
         dispatch(themeActions.setThemeStatus(event.target.checked))
     };
 
+    const handleDelete = () => {
+        dispatch(movieActions.setMovieForSearch(null))
+    };
+
     return (
         <div className={css.header}>
             <div style={{display: 'flex'}}>
                 <NavLink to={'movies?page=1'} style={{textDecoration: 'none'}}>Movie DB</NavLink>
-                <SearchField/>
+                <div style={{display: 'flex', alignItems: 'center'}}>
+                    <SearchField/>
+                    {movieForSearch && (
+                        <Stack direction="row" spacing={1}>
+                            <Chip label={movieForSearch} variant="outlined" color={'primary'} onDelete={handleDelete} />
+                        </Stack>
+                    )}
+                </div>
             </div>
             <div style={{display: 'flex', alignItems: 'center'}}>
                 <div className={css.header_nav}>

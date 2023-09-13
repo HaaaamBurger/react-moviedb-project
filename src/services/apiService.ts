@@ -9,9 +9,18 @@ const apiService = axios.create({
     headers: {
         accept: 'application/json',
         'content-type': 'application/json',
-        Authorization: `Bearer ${apiAccess.accessToken}`
     }
 });
+
+apiService.interceptors.request.use(req => {
+    const access = apiAccess.accessToken;
+
+    if (access) {
+        req.headers.Authorization = `Bearer ${apiAccess.accessToken}`
+    }
+
+    return req
+})
 
 export type {
     IRes

@@ -1,35 +1,54 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {movieActions} from "../../redux";
-import {useSearchParams} from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
 import {Movie} from "../Movie";
 import css from './movies.module.css';
 import {movieServices} from "../../services/movieServices";
+import {IMovie, IMovies} from "../../interfaces";
 
 
 const Movies = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const {movies, errRespond, movieForSearch} = useAppSelector(state => state.movieReducer);
     const [query, setQuery] = useSearchParams({page: '1'})
 
-    // useEffect(() => {
-    //    fetch('https://api.themoviedb.org/3/search/movie?query=war&api_key=657c7ca56f4858ad333da131d8b07962')
-    //        .then(response => response.json())
-    //        .then(data => console.log(data))
-    // }, []);
-
+    console.log(movies)
     useEffect(() => {
         dispatch(movieActions.allMovies({id: query.get('page')}));
         setQuery(prev => ({...prev, page: prev.get('page')}));
 
-        // if (movieForSearch) {
-        //
-        // }
-    }, [query, dispatch, setQuery,movieForSearch]);
+        if (movieForSearch) {
+            movieServices.getMoviesByKeyword(movieForSearch, query.get('page')).then(({data}) => {
+                dispatch(movieActions.setMovies(data))
+                console.log(data)
+                // const newMovies: IMovie[] = []
+                // if (data.results.length) {
+                //     data.results.map(movie => {
+                //         movieServices.getMoviesById(movie.id).then(({data}) => {
+                //             if (data) {
+                //                 newMovies.push(data);
+                //                 console.log(data)
+                //             }
+                //         }
+                //         ).catch(error => {
+                //             console.log(error)
+                //         })
+                //     })
+                //
+                // } else {
+                //     setQuery(prev => ({...prev, page: 1}));
+                // }
+            });
+        }
+    }, [query, dispatch, setQuery, movieForSearch]);
 
     useEffect(() => {
-        setQuery(prev => ({...prev, page: 1}))
+        if (errRespond) {
+            setQuery(prev => ({...prev, page: 1}))
+        }
     }, [errRespond]);
 
     return (
