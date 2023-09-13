@@ -1,9 +1,33 @@
 import React from 'react';
 
-import {alpha, AppBar, Box, InputBase, styled, Toolbar} from "@mui/material";
+import {alpha, InputBase, styled, Toolbar} from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
+import {useLocation} from "react-router-dom";
+import css from "./header.module.css";
+import {useForm} from "react-hook-form";
+import {useAppDispatch} from "../../hooks";
+import {movieActions} from "../../redux";
+
 
 const SearchField = () => {
+    interface IMovieSearchInterface{
+        searchField: string
+    }
+
+    const dispatch = useAppDispatch();
+
+    const {pathname} = useLocation();
+
+    const {
+        register,
+        reset,
+        handleSubmit
+    } = useForm({mode: 'all'})
+
+    const saveMovie = (movie: IMovieSearchInterface) => {
+        dispatch(movieActions.setMovieForSearch(movie.searchField));
+        reset();
+    }
 
     const Search = styled('div')(({theme}) => ({
         position: 'relative',
@@ -34,7 +58,6 @@ const SearchField = () => {
         color: 'inherit',
         '& .MuiInputBase-input': {
             padding: theme.spacing(1, 1, 1, 0),
-            // vertical padding + font size from searchIcon
             paddingLeft: `calc(1em + ${theme.spacing(4)})`,
             transition: theme.transitions.create('width'),
             width: '100%',
@@ -48,17 +71,21 @@ const SearchField = () => {
     }));
 
     return (
-        <Toolbar>
-            <Search>
-                <SearchIconWrapper>
-                    <SearchIcon/>
-                </SearchIconWrapper>
-                <StyledInputBase
-                    placeholder="Search…"
-                    inputProps={{'aria-label': 'search'}}
-                />
-            </Search>
-        </Toolbar>
+        <form className={css.searchForm} onSubmit={handleSubmit(saveMovie)}>
+            <Toolbar>
+                <Search>
+                    <SearchIconWrapper>
+                        <SearchIcon/>
+                    </SearchIconWrapper>
+                    <StyledInputBase
+                        placeholder="Search…"
+                        inputProps={{'aria-label': 'search'}}
+                        disabled={pathname !== '/movies'}
+                        {...register('searchField')}
+                    />
+                </Search>
+            </Toolbar>
+        </form>
     );
 };
 

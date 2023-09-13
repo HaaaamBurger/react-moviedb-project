@@ -3,14 +3,15 @@ import {IMovies} from "../../interfaces";
 import {movieServices} from "../../services/movieServices";
 import {AxiosError} from "axios";
 import {IMovie} from "../../interfaces/movieInterface";
-import {IGenre, IGenres} from "../../interfaces/genresInterface";
+import {IGenre} from "../../interfaces/genresInterface";
 
 interface IState {
     movies: IMovies<IMovie>;
     errRespond: {
         errors?: string[]
     },
-    genres: IGenre[]
+    genres: IGenre[],
+    movieForSearch: string
 }
 
 const initialState: IState = {
@@ -19,7 +20,8 @@ const initialState: IState = {
         results: []
     },
     errRespond: null,
-    genres: []
+    genres: [],
+    movieForSearch: null
 }
 
 const allGenres = createAsyncThunk<IGenre[],void>(
@@ -57,6 +59,9 @@ const movieSlice = createSlice({
         },
         setError: (state, action) => {
             state.errRespond = action.payload
+        },
+        setMovieForSearch: (state, action) => {
+            state.movieForSearch = action.payload
         }
     },
     extraReducers: builder => builder
@@ -72,13 +77,14 @@ const movieSlice = createSlice({
         })
 })
 
-const {reducer: movieReducer, actions: {setMoviePage,setError}} = movieSlice;
+const {reducer: movieReducer, actions: {setMoviePage,setError,setMovieForSearch}} = movieSlice;
 
 const movieActions = {
     setMoviePage,
     allMovies,
     allGenres,
-    setError
+    setError,
+    setMovieForSearch
 }
 
 export {

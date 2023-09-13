@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 
 import css from './header.module.css';
 
-import {NavLink} from "react-router-dom";
-import {Alert, Avatar, FormControlLabel, FormGroup, Stack, styled, Switch} from "@mui/material";
+import {NavLink, useLocation} from "react-router-dom";
+import {Alert, Avatar, Button, FormControlLabel, FormGroup, Stack, styled, Switch} from "@mui/material";
 import {deepPurple} from "@mui/material/colors";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {themeActions} from "../../redux";
@@ -59,6 +59,7 @@ const MaterialUISwitch = styled(Switch)(({theme}) => ({
 const Header = () => {
     const dispatch = useAppDispatch();
     const {status} = useAppSelector(state => state.themeReducer);
+
     const {errRespond} = useAppSelector(state => state.movieReducer);
 
     const [pageError, setPageError] = useState<boolean>(false);
@@ -84,12 +85,11 @@ const Header = () => {
                 <NavLink to={'movies?page=1'} style={{textDecoration: 'none'}}>Movie DB</NavLink>
                 <SearchField/>
             </div>
-            <div className={css.header_nav}>
-                <NavLink to={'movies?page=1'}>Movies</NavLink>
-                <NavLink to={'genres'}>Genres</NavLink>
-                <NavLink to={'search'}>Search</NavLink>
-            </div>
             <div style={{display: 'flex', alignItems: 'center'}}>
+                <div className={css.header_nav}>
+                    <NavLink to={'movies?page=1'}>Movies</NavLink>
+                    <NavLink to={'genres'}>Genres</NavLink>
+                </div>
                 <div>
                     <FormGroup onChange={handleChangeSwitch}>
                         <FormControlLabel

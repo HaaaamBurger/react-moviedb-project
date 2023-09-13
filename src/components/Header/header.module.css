@@ -30,6 +30,7 @@ body{
 }
 .header_nav{
     display: flex;
+    margin-right: 100px;
 }
 .header a[class='active']{
     text-decoration: underline;
@@ -38,5 +39,12 @@ body{
     top: 100px;
     right: 50px;
     position: absolute;
+}
+.searchForm{
+    display: flex;
+    align-items: center;
+}
+.searchForm button{
+    height: 40px;
 }
 
