@@ -1,41 +1,29 @@
 import React, {useEffect, useState} from 'react';
 
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {movieActions} from "../../redux";
+import {genreActions, movieActions} from "../../redux";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {Movie} from "../Movie";
 import css from './movies.module.css';
 import {movieServices} from "../../services/movieServices";
-import {apiService} from "../../services/apiService";
 
 
 const Movies = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const {genreMovies} = useAppSelector(state => state.genreReducer)
+    const {genreMovies, genreId} = useAppSelector(state => state.genreReducer)
     const {movies, errRespond, movieForSearch, filterMovie,} = useAppSelector(state => state.movieReducer);
     const [query, setQuery] = useSearchParams({page: '1'});
 
-    // useEffect(() => {
-    //     if (genreMovies.results.length){
-    //         dispatch(movieActions.setMovies(genreMovies));
-    //     }
-    // }, [genreMovies]);
+    console.log(movies, genreId, movieForSearch);
 
-    console.log(movies)
 
     useEffect(() => {
-        if (!movieForSearch) {
-                dispatch(movieActions.allMovies({id: query.get('page')}));
-                setQuery(prev => ({...prev, page: prev.get('page')}));
-            // if (genreMovies) {
-            //     dispatch(movieActions.setMovies(genreMovies));
-            //     setQuery(prev => ({...prev, page: prev.get('page')}));
-            // } else {
-            //     dispatch(movieActions.allMovies({id: query.get('page')}));
-            //     setQuery(prev => ({...prev, page: prev.get('page')}));
-            // }
+        if (!movieForSearch && !genreId) {
+            dispatch(movieActions.allMovies({id: query.get('page')}));
+            setQuery(prev => ({...prev, page: prev.get('page')}));
+
         } else if (movieForSearch) {
             movieServices.getMoviesByKeyword(movieForSearch, query.get('page')).then(({data}) => {
                 if (data.results.length) {
@@ -45,9 +33,13 @@ const Movies = () => {
                     dispatch(movieActions.setMovieForSearch(null));
                 }
             })
+        } else if (genreId) {
+            if (genreId) {
+                dispatch(genreActions.getByGenre({id: genreId, page: query.get('page')}))
+            }
         }
 
-    }, [query, movieForSearch]);
+    }, [query, movieForSearch, genreId]);
 
 
     useEffect(() => {
@@ -60,9 +52,11 @@ const Movies = () => {
         <div>
             <div className={css.moviesWrapper}>
                 {
-                    !filterMovie.length ?
+                    !genreId && !filterMovie.length ?
                         movies.results.map(movie => <Movie key={movie.id} movie={movie}/>) :
-                        filterMovie.map(movie => <Movie key={movie.id} movie={movie}/>)
+                        genreMovies ?
+                            genreMovies.results.map(movie => <Movie key={movie.id} movie={movie}/>) :
+                            filterMovie.length ? filterMovie.map(movie => <Movie key={movie.id} movie={movie}/>) : null
                 }
             </div>
         </div>

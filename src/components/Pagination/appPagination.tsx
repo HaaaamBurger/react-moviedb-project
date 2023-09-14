@@ -12,6 +12,7 @@ const AppPagination = () => {
 
     const handlePagination = (event: React.ChangeEvent<unknown>, value: number) => {
        setQuery(prev => ({...prev, page: value}))
+
     };
 
     return (

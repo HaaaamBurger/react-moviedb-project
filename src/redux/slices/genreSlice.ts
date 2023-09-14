@@ -4,7 +4,8 @@ import {AxiosError} from "axios";
 import {movieServices} from "../../services/movieServices";
 
 interface IState{
-    genreMovies: IMovies
+    genreMovies: IMovies,
+    genreId: string
 }
 
 const initialState: IState = {
@@ -13,7 +14,8 @@ const initialState: IState = {
         results: [],
         total_pages: null,
         total_results: null
-    }
+    },
+    genreId: null
 }
 
 const getByGenre = createAsyncThunk<IMovies, {id: string,page: string}>(
@@ -32,7 +34,11 @@ const getByGenre = createAsyncThunk<IMovies, {id: string,page: string}>(
 const genreSlice = createSlice({
     name: 'genreSlice',
     initialState,
-    reducers: {},
+    reducers: {
+        setGenreId: (state, action) => {
+            state.genreId = action.payload
+        }
+    },
     extraReducers: builder => builder
         .addCase(getByGenre.fulfilled, (state, action) => {
             state.genreMovies = action.payload

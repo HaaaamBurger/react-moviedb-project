@@ -14,16 +14,12 @@ const MovieByGenre = () => {
     const {genreMovies} = useAppSelector(state => state.genreReducer)
     const {genres} = useAppSelector(state => state.movieReducer)
 
-    console.log(genres)
-
     useEffect(() => {
         dispatch(movieActions.allGenres());
     }, []);
 
-    console.log(genreMovies)
-
-    const genreHandler = async (id: string) => {
-        await dispatch(genreActions.getByGenre({id, page: '1'}));
+    const genreHandler = (id: string) => {
+        dispatch(genreActions.setGenreId(id))
         navigate('/movies?page=1');
     }
 
