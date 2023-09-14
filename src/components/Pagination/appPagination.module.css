@@ -4,3 +4,6 @@
     display: flex;
     justify-content: center;
 }
+.Pagionation ul li button{
+    background-color: #c9bebe;
+}

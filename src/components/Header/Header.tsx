@@ -32,7 +32,7 @@ const MaterialUISwitch = styled(Switch)(({theme}) => ({
         },
     },
     '& .MuiSwitch-thumb': {
-        backgroundColor: theme.palette.mode === 'dark' ? '#003892' : '#001e3c',
+        backgroundColor: theme.palette.mode === 'dark' ? '#3a3a3a' : '#7c7c7c',
         width: 32,
         height: 32,
         '&:before': {
@@ -93,7 +93,7 @@ const Header = () => {
                     <SearchField/>
                     {movieForSearch && (
                         <Stack direction="row" spacing={1}>
-                            <Chip label={movieForSearch} variant="outlined" color={'primary'} onDelete={handleDelete}/>
+                            <Chip label={movieForSearch} variant="outlined" color={'default'} onDelete={handleDelete} style={{color: 'white', fontSize: '17px'}}/>
                         </Stack>
                     )}
                 </div>
@@ -111,7 +111,7 @@ const Header = () => {
                     </FormGroup>
                 </div>
                 <div>
-                    <Avatar sx={{bgcolor: deepPurple[500]}}>N</Avatar>
+                    <Avatar>OM</Avatar>
                 </div>
             </div>
             <div className={css.errorPos}>

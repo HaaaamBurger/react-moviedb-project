@@ -7,16 +7,17 @@ body{
     align-items: center;
 }
 .header{
+    z-index: 5;
     min-width: 600px;
     padding: 0 20px;
     box-sizing: border-box;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #2e364f;
+    background-color: #333333;
     opacity: 97%;
     height: 60px;
-    box-shadow: 0px 3px 3px 0px rgb(20, 22, 42);
+    box-shadow: 0px 3px 3px 0px rgb(17, 17, 17);
     position: fixed;
     width: 100%;
     font-family: 'Barlow', sans-serif;

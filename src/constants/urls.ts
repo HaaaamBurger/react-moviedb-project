@@ -1,10 +1,11 @@
 const baseURL = 'https://api.themoviedb.org/3';
 
 const urls = {
-    moviesByPage: (id: string) => `/discover/movie?page=${id}`,
+    moviesByPage: (id: string): string => `/discover/movie?page=${id}`,
     getGenres: '/genre/movie/list',
-    getById: (id: number) => `/movie/${id}`,
-    getByKeyword: (keyword: string, id: string) => `/search/movie?query=${keyword}&page=${id}`
+    getById: (id: number): string => `/movie/${id}`,
+    getByKeyword: (keyword: string, id: string): string => `/search/movie?query=${keyword}&page=${id}`,
+    getByGenre: (genreId: string):string => `/discover/movie?with_genres=${genreId}`
 }
 
 export {

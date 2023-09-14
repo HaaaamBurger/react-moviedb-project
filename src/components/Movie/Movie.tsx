@@ -1,5 +1,6 @@
 import React, {FC, PropsWithChildren} from 'react';
 
+import ImageNotSupportedOutlinedIcon from '@mui/icons-material/ImageNotSupportedOutlined';
 import css from './movie.module.css';
 
 import {useNavigate} from "react-router-dom";
@@ -11,11 +12,18 @@ interface IProps extends PropsWithChildren {
 
 const Movie: FC<IProps> = ({movie}) => {
     const navigate = useNavigate();
-    const moviePoster = `https://image.tmdb.org/t/p/w500${movie?.poster_path}`
+    const moviePoster = movie?.poster_path
 
     return (
         <div className={css.movieWrapper} onClick={() => navigate(`/movie/:${movie.id}`, {state: movie})}>
-            <img src={moviePoster} alt={movie.title}/>
+            {
+                moviePoster ?
+                    <img src={`https://image.tmdb.org/t/p/w500${moviePoster}`} alt={movie.title}/>:
+                        <div className={css.noMovie}>
+                            {movie.title}
+                            <ImageNotSupportedOutlinedIcon/>
+                        </div>
+            }
         </div>
     );
 };
