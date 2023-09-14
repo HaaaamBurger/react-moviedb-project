@@ -60,7 +60,6 @@ const Header = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const {status} = useAppSelector(state => state.themeReducer);
-
     const {errRespond, movieForSearch, movies: {page}} = useAppSelector(state => state.movieReducer);
 
     const [pageError, setPageError] = useState<boolean>(false);
