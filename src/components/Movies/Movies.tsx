@@ -6,44 +6,33 @@ import {useNavigate, useSearchParams} from "react-router-dom";
 import {Movie} from "../Movie";
 import css from './movies.module.css';
 import {movieServices} from "../../services/movieServices";
-import {IMovie, IMovies} from "../../interfaces";
+import {apiService} from "../../services/apiService";
 
 
 const Movies = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const {movies, errRespond, movieForSearch} = useAppSelector(state => state.movieReducer);
-    const [query, setQuery] = useSearchParams({page: '1'})
 
-    console.log(movies)
+    const {movies, errRespond, movieForSearch, filterMovie,} = useAppSelector(state => state.movieReducer);
+    const [query, setQuery] = useSearchParams({page: '1'});
+
     useEffect(() => {
-        dispatch(movieActions.allMovies({id: query.get('page')}));
-        setQuery(prev => ({...prev, page: prev.get('page')}));
-
-        if (movieForSearch) {
+        if (!movieForSearch) {
+            dispatch(movieActions.allMovies({id: query.get('page')}));
+            setQuery(prev => ({...prev, page: prev.get('page')}));
+        } else if (movieForSearch) {
             movieServices.getMoviesByKeyword(movieForSearch, query.get('page')).then(({data}) => {
-                dispatch(movieActions.setMovies(data))
-                console.log(data)
-                // const newMovies: IMovie[] = []
-                // if (data.results.length) {
-                //     data.results.map(movie => {
-                //         movieServices.getMoviesById(movie.id).then(({data}) => {
-                //             if (data) {
-                //                 newMovies.push(data);
-                //                 console.log(data)
-                //             }
-                //         }
-                //         ).catch(error => {
-                //             console.log(error)
-                //         })
-                //     })
-                //
-                // } else {
-                //     setQuery(prev => ({...prev, page: 1}));
-                // }
-            });
+                if (data.results.length) {
+                    dispatch(movieActions.setMovies(data));
+                } else {
+                    navigate('/movies?page=1');
+                    dispatch(movieActions.setMovieForSearch(null));
+                }
+            })
         }
-    }, [query, dispatch, setQuery, movieForSearch]);
+
+    }, [query, movieForSearch]);
+
 
     useEffect(() => {
         if (errRespond) {
@@ -54,7 +43,11 @@ const Movies = () => {
     return (
         <div>
             <div className={css.moviesWrapper}>
-                {movies.results.map(movie => <Movie key={movie.id} movie={movie}/>)}
+                {
+                    !filterMovie.length ?
+                        movies.results.map(movie => <Movie key={movie.id} movie={movie}/>) :
+                        filterMovie.map(movie => <Movie key={movie.id} movie={movie}/>)
+                }
             </div>
         </div>
     );

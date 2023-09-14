@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 
 import css from './header.module.css';
 
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {Alert, Avatar, Chip, FormControlLabel, FormGroup, Stack, styled, Switch} from "@mui/material";
 import {deepPurple} from "@mui/material/colors";
 import {useAppDispatch, useAppSelector} from "../../hooks";
@@ -58,9 +58,10 @@ const MaterialUISwitch = styled(Switch)(({theme}) => ({
 
 const Header = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const {status} = useAppSelector(state => state.themeReducer);
 
-    const {errRespond,movieForSearch} = useAppSelector(state => state.movieReducer);
+    const {errRespond, movieForSearch, movies: {page}} = useAppSelector(state => state.movieReducer);
 
     const [pageError, setPageError] = useState<boolean>(false);
 
@@ -73,14 +74,15 @@ const Header = () => {
         }
     }, [errRespond]);
 
-    const [checked, setChecked] = useState<boolean>(status);
+    // const [checked, setChecked] = useState<boolean>(status);
 
     const handleChangeSwitch = (event: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(themeActions.setThemeStatus(event.target.checked))
     };
 
     const handleDelete = () => {
-        dispatch(movieActions.setMovieForSearch(null))
+        dispatch(movieActions.setMovieForSearch(null));
+        navigate('/movies?page=1');
     };
 
     return (
@@ -91,7 +93,7 @@ const Header = () => {
                     <SearchField/>
                     {movieForSearch && (
                         <Stack direction="row" spacing={1}>
-                            <Chip label={movieForSearch} variant="outlined" color={'primary'} onDelete={handleDelete} />
+                            <Chip label={movieForSearch} variant="outlined" color={'primary'} onDelete={handleDelete}/>
                         </Stack>
                     )}
                 </div>

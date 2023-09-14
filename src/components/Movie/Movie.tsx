@@ -11,7 +11,7 @@ interface IProps extends PropsWithChildren {
 
 const Movie: FC<IProps> = ({movie}) => {
     const navigate = useNavigate();
-    const moviePoster = `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+    const moviePoster = `https://image.tmdb.org/t/p/w500${movie?.poster_path}`
 
     return (
         <div className={css.movieWrapper} onClick={() => navigate(`/movie/:${movie.id}`, {state: movie})}>

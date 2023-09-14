@@ -2,7 +2,7 @@ import React from 'react';
 
 import {alpha, InputBase, styled, Toolbar} from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import css from "./header.module.css";
 import {useForm} from "react-hook-form";
 import {useAppDispatch} from "../../hooks";
@@ -14,6 +14,7 @@ const SearchField = () => {
         searchField: string
     }
 
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
     const {pathname} = useLocation();
@@ -25,6 +26,7 @@ const SearchField = () => {
     } = useForm({mode: 'all'})
 
     const saveMovie = (movie: IMovieSearchInterface) => {
+        navigate('\movies?page=1');
         dispatch(movieActions.setMovieForSearch(movie.searchField));
         reset();
     }

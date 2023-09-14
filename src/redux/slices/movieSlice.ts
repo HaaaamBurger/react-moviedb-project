@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice, isFulfilled} from "@reduxjs/toolkit";
-import {IMovies} from "../../interfaces";
+import {IMovie, IMovies} from "../../interfaces";
 import {movieServices} from "../../services/movieServices";
 import {AxiosError} from "axios";
 
@@ -11,7 +11,8 @@ interface IState {
         errors?: string[]
     },
     genres: IGenre[],
-    movieForSearch: string
+    movieForSearch: string,
+    filterMovie: IMovie[]
 }
 
 const initialState: IState = {
@@ -23,7 +24,8 @@ const initialState: IState = {
     },
     errRespond: null,
     genres: [],
-    movieForSearch: null
+    movieForSearch: null,
+    filterMovie: []
 }
 
 const allGenres = createAsyncThunk<IGenre[],void>(
@@ -67,6 +69,9 @@ const movieSlice = createSlice({
         },
         setMovies: (state, action) => {
             state.movies = action.payload
+        },
+        setFilterMovie: (state, action) => {
+            state.filterMovie = action.payload
         }
     },
     extraReducers: builder => builder
@@ -82,7 +87,7 @@ const movieSlice = createSlice({
         })
 })
 
-const {reducer: movieReducer, actions: {setMoviePage,setError,setMovieForSearch,setMovies}} = movieSlice;
+const {reducer: movieReducer, actions: {setMoviePage,setError,setFilterMovie,setMovieForSearch,setMovies}} = movieSlice;
 
 const movieActions = {
     setMoviePage,
@@ -90,7 +95,8 @@ const movieActions = {
     allGenres,
     setError,
     setMovieForSearch,
-    setMovies
+    setMovies,
+    setFilterMovie
 }
 
 export {
