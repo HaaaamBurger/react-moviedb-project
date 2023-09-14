@@ -13,8 +13,17 @@ const Movies = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
+    const {genreMovies} = useAppSelector(state => state.genreReducer)
     const {movies, errRespond, movieForSearch, filterMovie,} = useAppSelector(state => state.movieReducer);
     const [query, setQuery] = useSearchParams({page: '1'});
+
+    useEffect(() => {
+        if (genreMovies.results.length){
+            dispatch(movieActions.setMovies(genreMovies));
+        }
+    }, [genreMovies]);
+
+    console.log(movies)
 
     useEffect(() => {
         if (!movieForSearch) {
