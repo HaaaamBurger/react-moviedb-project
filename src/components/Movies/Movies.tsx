@@ -17,18 +17,25 @@ const Movies = () => {
     const {movies, errRespond, movieForSearch, filterMovie,} = useAppSelector(state => state.movieReducer);
     const [query, setQuery] = useSearchParams({page: '1'});
 
-    useEffect(() => {
-        if (genreMovies.results.length){
-            dispatch(movieActions.setMovies(genreMovies));
-        }
-    }, [genreMovies]);
+    // useEffect(() => {
+    //     if (genreMovies.results.length){
+    //         dispatch(movieActions.setMovies(genreMovies));
+    //     }
+    // }, [genreMovies]);
 
     console.log(movies)
 
     useEffect(() => {
         if (!movieForSearch) {
-            dispatch(movieActions.allMovies({id: query.get('page')}));
-            setQuery(prev => ({...prev, page: prev.get('page')}));
+                dispatch(movieActions.allMovies({id: query.get('page')}));
+                setQuery(prev => ({...prev, page: prev.get('page')}));
+            // if (genreMovies) {
+            //     dispatch(movieActions.setMovies(genreMovies));
+            //     setQuery(prev => ({...prev, page: prev.get('page')}));
+            // } else {
+            //     dispatch(movieActions.allMovies({id: query.get('page')}));
+            //     setQuery(prev => ({...prev, page: prev.get('page')}));
+            // }
         } else if (movieForSearch) {
             movieServices.getMoviesByKeyword(movieForSearch, query.get('page')).then(({data}) => {
                 if (data.results.length) {

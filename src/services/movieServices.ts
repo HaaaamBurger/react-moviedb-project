@@ -8,7 +8,7 @@ const movieServices = {
     getGenres: (): IRes<IGenres<IGenre>> => apiService.get(urls.getGenres),
     getMoviesByKeyword: (keyword: string, id: string): IRes<IMovies> => apiService.get(urls.getByKeyword(keyword, id)),
     getMoviesById: (id: number): IRes<IMovie> => apiService.get(urls.getById(id)),
-    getMoviesByGenre: (genreId: string): IRes<IMovies> => apiService.get(urls.getByGenre(genreId))
+    getMoviesByGenre: (genreId: string, id: string): IRes<IMovies> => apiService.get(urls.getByGenre(genreId, id))
 }
 
 export {

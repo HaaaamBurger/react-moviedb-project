@@ -10,6 +10,7 @@ const MovieByGenre = () => {
 
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+
     const {genreMovies} = useAppSelector(state => state.genreReducer)
     const {genres} = useAppSelector(state => state.movieReducer)
 
@@ -22,9 +23,7 @@ const MovieByGenre = () => {
     console.log(genreMovies)
 
     const genreHandler = async (id: string) => {
-
-        await dispatch(genreActions.getByGenre({id}));
-
+        await dispatch(genreActions.getByGenre({id, page: '1'}));
         navigate('/movies?page=1');
     }
 
