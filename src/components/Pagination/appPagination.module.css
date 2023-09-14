@@ -5,5 +5,7 @@
     justify-content: center;
 }
 .Pagionation ul li button{
-    background-color: #c9bebe;
+    background-color: #948e8e;
+    color: aliceblue;
+    font-size: 1em;
 }
