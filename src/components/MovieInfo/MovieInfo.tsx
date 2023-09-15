@@ -1,23 +1,21 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 
 import css from './movieInfo.module.css';
 import {useAppDispatch, useAppLocation, useAppSelector} from "../../hooks";
 
 import {movieActions} from "../../redux";
-import {IGenre} from "../../interfaces/genresInterface";
+
 import ThumbsUpDownIcon from '@mui/icons-material/ThumbsUpDown';
 import StarIcon from '@mui/icons-material/Star';
-import {Box, Button, Rating, Typography} from "@mui/material";
-import {IMovie} from "../../interfaces";
+import {Box, Rating, Typography} from "@mui/material";
+import {IGenre, IMovie} from "../../interfaces";
 
 const MovieInfo = () => {
     //Виведення данних зі стейті в хеддер для того, щоб користувач зразу мав доступ до інформації
 
     const dispatch = useAppDispatch();
-    const {genres} = useAppSelector(state => state.movieReducer)
-
+    const {genres,movieDetail} = useAppSelector(state => state.movieReducer)
     const {state: movie} = useAppLocation<IMovie>();
-    // const [currentMovie, setCurrentMovie] = useState(movie);
 
     useEffect(() => {
         dispatch(movieActions.allGenres());
@@ -31,10 +29,15 @@ const MovieInfo = () => {
 
     //Запит на додаткову інформації про фільм, яка вже буде підгружатись
 
+    // useEffect(() => {
+    //     dispatch(movieActions.allMovieDetails({id: movie.id.toString()}))
+    // }, []);
+
+    // console.log(movie,movieDetail)
 
     return (
         <div className={css.movieInfoWrapper}>
-            <div className={css.movieHeader}>
+            <div className={css.movieHeader} style={{backgroundImage: `url(https://image.tmdb.org/t/p/original/${movie.backdrop_path})`}}>
                 <div>
                     <img src={`https://image.tmdb.org/t/p/w500${movie?.poster_path}`} alt=""/>
                 </div>

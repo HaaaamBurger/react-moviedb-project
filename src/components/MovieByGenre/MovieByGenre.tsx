@@ -24,7 +24,7 @@ const MovieByGenre = () => {
     }
 
     const error = () => {
-        console.log('eror');
+        console.log('error');
     }
     return (
         <div className={css.movieByGenreWrapper}>

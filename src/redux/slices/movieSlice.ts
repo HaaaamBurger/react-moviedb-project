@@ -1,9 +1,9 @@
-import {createAsyncThunk, createSlice, isFulfilled} from "@reduxjs/toolkit";
-import {IMovie, IMovies} from "../../interfaces";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {IGenre, IMovie, IMovieDetails, IMovies} from "../../interfaces";
 import {movieServices} from "../../services/movieServices";
 import {AxiosError} from "axios";
 
-import {IGenre} from "../../interfaces/genresInterface";
+
 
 interface IState {
     movies: IMovies;
@@ -12,7 +12,8 @@ interface IState {
     },
     genres: IGenre[],
     movieForSearch: string,
-    filterMovie: IMovie[]
+    filterMovie: IMovie[],
+    movieDetail: IMovieDetails
 }
 
 const initialState: IState = {
@@ -25,7 +26,8 @@ const initialState: IState = {
     errRespond: null,
     genres: [],
     movieForSearch: null,
-    filterMovie: []
+    filterMovie: [],
+    movieDetail: null
 }
 
 const allGenres = createAsyncThunk<IGenre[],void>(
@@ -48,6 +50,19 @@ const allMovies = createAsyncThunk<IMovies, { id: string }>(
             const {data} = await movieServices.getMoviesByPage(id)
             return data;
         } catch (e) {
+            const err = e as AxiosError;
+            return rejectWithValue(err.response.data);
+        }
+    }
+)
+
+const allMovieDetails = createAsyncThunk<IMovieDetails, {id: string}>(
+    'movieSlice/movieDetails',
+        async ({id}, {rejectWithValue}) => {
+        try {
+            const {data} = await movieServices.getMovieById(id);
+            return data;
+        }catch (e) {
             const err = e as AxiosError;
             return rejectWithValue(err.response.data);
         }
@@ -85,6 +100,9 @@ const movieSlice = createSlice({
         .addCase(allGenres.fulfilled,(state, action) => {
             state.genres = action.payload
         })
+        .addCase(allMovieDetails.fulfilled, (state, action) => {
+            state.movieDetail = action.payload;
+        })
 })
 
 const {reducer: movieReducer, actions: {setMoviePage,setError,setFilterMovie,setMovieForSearch,setMovies}} = movieSlice;
@@ -92,6 +110,7 @@ const {reducer: movieReducer, actions: {setMoviePage,setError,setFilterMovie,set
 const movieActions = {
     allMovies,
     allGenres,
+    allMovieDetails,
     setMoviePage,
     setError,
     setMovieForSearch,

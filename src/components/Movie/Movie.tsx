@@ -1,4 +1,4 @@
-import React, {FC, PropsWithChildren} from 'react';
+import React, {FC, PropsWithChildren, useEffect} from 'react';
 
 import ImageNotSupportedOutlinedIcon from '@mui/icons-material/ImageNotSupportedOutlined';
 import css from './movie.module.css';
@@ -12,10 +12,10 @@ interface IProps extends PropsWithChildren {
 
 const Movie: FC<IProps> = ({movie}) => {
     const navigate = useNavigate();
-    const moviePoster = movie?.poster_path
+    const moviePoster = movie?.poster_path;
 
     return (
-        <div className={css.movieWrapper} onClick={() => navigate(`/movie/:${movie.id}`, {state: movie})}>
+        <div className={css.movieWrapper} onClick={() => navigate(`/movie/:${movie.id}`, {state: {movie}})}>
             {
                 moviePoster ?
                     <img src={`https://image.tmdb.org/t/p/w500${moviePoster}`} alt={movie.title}/>:
