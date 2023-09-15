@@ -15,7 +15,7 @@ const Movie: FC<IProps> = ({movie}) => {
     const moviePoster = movie?.poster_path;
 
     return (
-        <div className={css.movieWrapper} onClick={() => navigate(`/movie/:${movie.id}`, {state: {movie}})}>
+        <div className={css.movieWrapper} onClick={() => navigate(`/movie/:${movie.id}`, {state: movie})}>
             {
                 moviePoster ?
                     <img src={`https://image.tmdb.org/t/p/w500${moviePoster}`} alt={movie.title}/>:
