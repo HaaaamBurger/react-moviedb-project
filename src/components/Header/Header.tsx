@@ -109,14 +109,6 @@ const Header = () => {
                 <div style={{display: 'flex', alignItems: 'center'}}>
                     <SearchField/>
                     {
-                        location.pathname !== '/movies' ?
-                            <Box sx={{ '& button': { m: 1 } }}>
-                                <Button variant="contained" style={{backgroundColor: '#938f8f'}} size="medium" onClick={() => navigate(-1)}>
-                                    <UndoIcon/>
-                                </Button>
-                            </Box> : null
-                    }
-                    {
                         movieForSearch ?
                             <Stack direction="row" spacing={1}>
                                 <Chip label={movieForSearch} variant="outlined" color={'default'}
@@ -127,6 +119,14 @@ const Header = () => {
                                     <Chip label={genreName} variant="outlined" color={'default'} onDelete={handleDeleteId}
                                           style={{color: 'white', fontSize: '17px'}}/>
                                 </Stack> : null
+                    }
+                    {
+                        location.pathname !== '/movies' ?
+                            <Box sx={{ '& button': { m: 1 } }} style={{marginLeft: '15px'}}>
+                                <Button variant="contained" style={{backgroundColor: '#938f8f'}} size="medium" onClick={() => navigate(-1)}>
+                                    <UndoIcon/>
+                                </Button>
+                            </Box> : null
                     }
                 </div>
             </div>

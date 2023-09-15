@@ -12,7 +12,7 @@ const MovieByGenre = () => {
     const dispatch = useAppDispatch();
 
     const {genreMovies} = useAppSelector(state => state.genreReducer)
-    const {genres} = useAppSelector(state => state.movieReducer)
+    const {genres,movieForSearch} = useAppSelector(state => state.movieReducer)
 
     useEffect(() => {
         dispatch(movieActions.allGenres());
@@ -21,6 +21,10 @@ const MovieByGenre = () => {
     const genreHandler = (id: string) => {
         dispatch(genreActions.setGenreId(id))
         navigate('/movies?page=1');
+    }
+
+    const error = () => {
+        console.log('eror');
     }
     return (
         <div className={css.movieByGenreWrapper}>
@@ -39,7 +43,7 @@ const MovieByGenre = () => {
                                 </CardContent>
                                 <CardActions style={{backgroundColor: '#1e1d1d', color: 'white'}}>
                                     <Button size="small" color={'inherit'}
-                                            onClick={() => genreHandler(genre.id.toString())}>Open</Button>
+                                            onClick={!movieForSearch ?() => genreHandler(genre.id.toString()) : error}>Open</Button>
                                 </CardActions>
                             </React.Fragment>
                         }</Card>

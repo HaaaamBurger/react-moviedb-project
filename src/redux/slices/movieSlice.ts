@@ -90,9 +90,9 @@ const movieSlice = createSlice({
 const {reducer: movieReducer, actions: {setMoviePage,setError,setFilterMovie,setMovieForSearch,setMovies}} = movieSlice;
 
 const movieActions = {
-    setMoviePage,
     allMovies,
     allGenres,
+    setMoviePage,
     setError,
     setMovieForSearch,
     setMovies,
