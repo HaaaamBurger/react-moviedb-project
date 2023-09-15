@@ -22,7 +22,6 @@ const MovieByGenre = () => {
         dispatch(genreActions.setGenreId(id))
         navigate('/movies?page=1');
     }
-    console.log(genreMovies)
     return (
         <div className={css.movieByGenreWrapper}>
             {genres.map((genre, index) =>
@@ -36,11 +35,6 @@ const MovieByGenre = () => {
                                     </Typography>
                                     <Typography variant="h5" component="div">
                                         {genre.name}
-                                    </Typography>
-                                    <Typography variant="body2">
-                                        {/*well meaning and kindly.*/}
-                                        <br/>
-                                        {/*{'"a benevolent smile"'}*/}
                                     </Typography>
                                 </CardContent>
                                 <CardActions style={{backgroundColor: '#1e1d1d', color: 'white'}}>

@@ -92,7 +92,6 @@ const Header = () => {
 
     const handleDeleteId = () => {
         dispatch(genreActions.setGenreId(null))
-        setGenreName(null)
         navigate('/movies?page=1');
     }
 

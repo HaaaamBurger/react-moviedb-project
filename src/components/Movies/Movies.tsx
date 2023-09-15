@@ -17,6 +17,12 @@ const Movies = () => {
     const [query, setQuery] = useSearchParams({page: '1'});
 
     useEffect(() => {
+        if (genreMovies){
+            dispatch(movieActions.setMovies(genreMovies))
+        }
+    }, [genreMovies]);
+
+    useEffect(() => {
         if (!movieForSearch && !genreId) {
             dispatch(movieActions.allMovies({id: query.get('page')}));
             setQuery(prev => ({...prev, page: prev.get('page')}));
@@ -32,7 +38,10 @@ const Movies = () => {
             })
         } else if (genreId) {
             if (genreId) {
-                dispatch(genreActions.getByGenre({id: genreId, page: query.get('page')}))
+                    dispatch(genreActions.getByGenre({id: genreId, page: query.get('page')}));
+            } else {
+                navigate('/movies?page=1');
+                dispatch(movieActions.setMovieForSearch(null));
             }
         }
     }, [query, movieForSearch, genreId]);
