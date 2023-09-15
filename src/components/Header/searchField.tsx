@@ -5,7 +5,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import {useLocation, useNavigate} from "react-router-dom";
 import css from "./header.module.css";
 import {useForm} from "react-hook-form";
-import {useAppDispatch} from "../../hooks";
+import {useAppDispatch, useAppSelector} from "../../hooks";
 import {movieActions} from "../../redux";
 
 
@@ -16,6 +16,7 @@ const SearchField = () => {
 
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const {genreId} = useAppSelector(state => state.genreReducer)
 
     const {pathname} = useLocation();
 
@@ -82,7 +83,7 @@ const SearchField = () => {
                     <StyledInputBase
                         placeholder="Search…"
                         inputProps={{'aria-label': 'search'}}
-                        disabled={pathname !== '/movies'}
+                        disabled={pathname !== '/movies' || !!genreId}
                         {...register('searchField')}
                     />
                 </Search>

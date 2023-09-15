@@ -6,7 +6,7 @@ import {NavLink, useNavigate} from "react-router-dom";
 import {Alert, Avatar, Chip, FormControlLabel, FormGroup, Stack, styled, Switch} from "@mui/material";
 import {deepPurple} from "@mui/material/colors";
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {movieActions, themeActions} from "../../redux";
+import {genreActions, movieActions, themeActions} from "../../redux";
 import {SearchField} from "./searchField";
 
 const MaterialUISwitch = styled(Switch)(({theme}) => ({
@@ -59,10 +59,21 @@ const MaterialUISwitch = styled(Switch)(({theme}) => ({
 const Header = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+
     const {status} = useAppSelector(state => state.themeReducer);
-    const {errRespond, movieForSearch, movies: {page}} = useAppSelector(state => state.movieReducer);
+    const {errRespond, movieForSearch, movies: {page}, genres} = useAppSelector(state => state.movieReducer);
+    const {genreId} = useAppSelector(state => state.genreReducer);
+    const [genreName, setGenreName] = useState<string>(null)
 
     const [pageError, setPageError] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (genreId) {
+            dispatch(movieActions.allGenres());
+            const {name} = genres.find(genre => genre.id === +genreId);
+            setGenreName(name);
+        }
+    }, [genreId]);
 
     useEffect(() => {
         if (errRespond?.errors) {
@@ -79,7 +90,13 @@ const Header = () => {
         dispatch(themeActions.setThemeStatus(event.target.checked))
     };
 
-    const handleDelete = () => {
+    const handleDeleteId = () => {
+        dispatch(genreActions.setGenreId(null))
+        setGenreName(null)
+        navigate('/movies?page=1');
+    }
+
+    const handleDeleteSearch = () => {
         dispatch(movieActions.setMovieForSearch(null));
         navigate('/movies?page=1');
     };
@@ -90,11 +107,18 @@ const Header = () => {
                 <NavLink to={'movies?page=1'} style={{textDecoration: 'none'}}>Movie DB</NavLink>
                 <div style={{display: 'flex', alignItems: 'center'}}>
                     <SearchField/>
-                    {movieForSearch && (
-                        <Stack direction="row" spacing={1}>
-                            <Chip label={movieForSearch} variant="outlined" color={'default'} onDelete={handleDelete} style={{color: 'white', fontSize: '17px'}}/>
-                        </Stack>
-                    )}
+                    {
+                        movieForSearch ?
+                            <Stack direction="row" spacing={1}>
+                                <Chip label={movieForSearch} variant="outlined" color={'default'}
+                                      onDelete={handleDeleteSearch} style={{color: 'white', fontSize: '17px'}}/>
+                            </Stack> :
+                            genreId ?
+                                <Stack direction="row" spacing={1}>
+                                    <Chip label={genreName} variant="outlined" color={'default'} onDelete={handleDeleteId}
+                                          style={{color: 'white', fontSize: '17px'}}/>
+                                </Stack> : null
+                    }
                 </div>
             </div>
             <div style={{display: 'flex', alignItems: 'center'}}>

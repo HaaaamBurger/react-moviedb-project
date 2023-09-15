@@ -16,8 +16,6 @@ const Movies = () => {
     const {movies, errRespond, movieForSearch, filterMovie,} = useAppSelector(state => state.movieReducer);
     const [query, setQuery] = useSearchParams({page: '1'});
 
-    console.log(movies);
-
     useEffect(() => {
         if (!movieForSearch && !genreId) {
             dispatch(movieActions.allMovies({id: query.get('page')}));
