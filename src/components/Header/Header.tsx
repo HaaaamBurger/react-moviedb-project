@@ -3,11 +3,11 @@ import React, {useEffect, useState} from 'react';
 import css from './header.module.css';
 
 import {NavLink, useNavigate} from "react-router-dom";
-import {Alert, Avatar, Chip, FormControlLabel, FormGroup, Stack, styled, Switch} from "@mui/material";
-import {deepPurple} from "@mui/material/colors";
-import {useAppDispatch, useAppSelector} from "../../hooks";
+import {Alert, Avatar, Box, Button, Chip, FormControlLabel, FormGroup, Stack, styled, Switch} from "@mui/material";
+import {useAppDispatch, useAppLocation, useAppSelector} from "../../hooks";
 import {genreActions, movieActions, themeActions} from "../../redux";
 import {SearchField} from "./searchField";
+import UndoIcon from '@mui/icons-material/Undo';
 
 const MaterialUISwitch = styled(Switch)(({theme}) => ({
     width: 62,
@@ -59,6 +59,8 @@ const MaterialUISwitch = styled(Switch)(({theme}) => ({
 const Header = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const location = useAppLocation();
+
 
     const {status} = useAppSelector(state => state.themeReducer);
     const {errRespond, movieForSearch, movies: {page}, genres} = useAppSelector(state => state.movieReducer);
@@ -106,6 +108,14 @@ const Header = () => {
                 <NavLink to={'movies?page=1'} style={{textDecoration: 'none'}}>Movie DB</NavLink>
                 <div style={{display: 'flex', alignItems: 'center'}}>
                     <SearchField/>
+                    {
+                        location.pathname !== '/movies' ?
+                            <Box sx={{ '& button': { m: 1 } }}>
+                                <Button variant="contained" style={{backgroundColor: '#938f8f'}} size="medium" onClick={() => navigate(-1)}>
+                                    <UndoIcon/>
+                                </Button>
+                            </Box> : null
+                    }
                     {
                         movieForSearch ?
                             <Stack direction="row" spacing={1}>

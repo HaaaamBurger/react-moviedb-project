@@ -7,7 +7,7 @@ import {movieActions} from "../../redux";
 import {IGenre} from "../../interfaces/genresInterface";
 import ThumbsUpDownIcon from '@mui/icons-material/ThumbsUpDown';
 import StarIcon from '@mui/icons-material/Star';
-import {Box, Rating, Typography} from "@mui/material";
+import {Box, Button, Rating, Typography} from "@mui/material";
 import {IMovie} from "../../interfaces";
 
 const MovieInfo = () => {
