@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import css from './movieInfo.module.css';
 import {useAppDispatch, useAppLocation, useAppSelector} from "../../hooks";
 
-import {movieActions} from "../../redux";
+import {genreActions, movieActions} from "../../redux";
 
 import ThumbsUpDownIcon from '@mui/icons-material/ThumbsUpDown';
 import StarIcon from '@mui/icons-material/Star';
@@ -12,10 +12,12 @@ import {
 } from "@mui/material";
 import {IGenre, IMovie} from "../../interfaces";
 import ImageNotSupportedOutlinedIcon from '@mui/icons-material/ImageNotSupportedOutlined';
+import {useNavigate} from "react-router-dom";
 
 const MovieInfo = () => {
     const dispatch = useAppDispatch();
-    const {genres, movieDetail, actors} = useAppSelector(state => state.movieReducer)
+    const navigate = useNavigate();
+    const {genres, movieDetail, actors, movieForSearch} = useAppSelector(state => state.movieReducer)
     const {state: movie} = useAppLocation<IMovie>();
     const [actorsInfo, setActorsInfo] = useState<number>(3)
 
@@ -35,6 +37,15 @@ const MovieInfo = () => {
         dispatch(movieActions.allMovieDetails({id: movie.id.toString()}))
         dispatch(movieActions.allActors({id: movie.id.toString()}));
     }, []);
+
+    const genreHandler = (id: string) => {
+        dispatch(genreActions.setGenreId(id))
+        navigate('/movies?page=1');
+    }
+
+    const error = () => {
+        console.log('error');
+    }
 
     return (
         <div>
@@ -168,7 +179,7 @@ const MovieInfo = () => {
                             </Typography>
                             <Stack direction="row" spacing={1}>
                                 {movieDetail?.genres.map((genre, index) => (
-                                    <Chip label={genre.name} key={index} color={'warning'}/>
+                                    <Chip label={genre.name} key={index} color={'warning'} onClick={!movieForSearch ?() => genreHandler(genre.id.toString()) : error}/>
                                 ))}
                             </Stack>
                         </Box>
@@ -196,9 +207,6 @@ const MovieInfo = () => {
                                         </a>
                                     ))}
                                 </div>
-                                {/*<a style={{backgroundColor: '#212121', padding: '5px 7px 5px 7px', borderRadius: '5px'}}>*/}
-                                {/*    {movieDetail?.original_language}*/}
-                                {/*</a>*/}
                             </Stack>
                         </Box>
                         <Divider variant="middle" color='white'/>

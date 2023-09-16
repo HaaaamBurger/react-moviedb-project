@@ -1,4 +1,4 @@
-import {createAsyncThunk, createSlice, isRejected} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, isFulfilled, isRejected} from "@reduxjs/toolkit";
 import {IGenre, IMovie, IMovieDetails, IMovies} from "../../interfaces";
 import {movieServices} from "../../services/movieServices";
 import {AxiosError} from "axios";
@@ -108,7 +108,6 @@ const movieSlice = createSlice({
     extraReducers: builder => builder
         .addCase(allMovies.fulfilled, (state, action) => {
             state.movies = action.payload;
-            state.errRespond = null;
         })
         .addCase(allGenres.fulfilled,(state, action) => {
             state.genres = action.payload
@@ -121,6 +120,9 @@ const movieSlice = createSlice({
         })
         .addMatcher(isRejected(), (state, action) => {
             state.errRespond = action.payload
+        })
+        .addMatcher(isFulfilled(), (state) => {
+            state.errRespond = null
         })
 
 })
