@@ -1,11 +1,14 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, isFulfilled, isRejected} from "@reduxjs/toolkit";
 import {IMovies} from "../../interfaces";
 import {AxiosError} from "axios";
 import {movieServices} from "../../services/movieServices";
 
 interface IState{
     genreMovies: IMovies,
-    genreId: string
+    genreId: string,
+    genreError: {
+        errors?: string
+    },
 }
 
 const initialState: IState = {
@@ -15,7 +18,9 @@ const initialState: IState = {
         total_pages: null,
         total_results: null
     },
-    genreId: null
+    genreId: null,
+    genreError: null
+
 }
 
 const getByGenre = createAsyncThunk<IMovies, {id: string,page: string}>(
@@ -36,12 +41,18 @@ const genreSlice = createSlice({
     initialState,
     reducers: {
         setGenreId: (state, action) => {
-            state.genreId = action.payload
+            state.genreId = action.payload;
         }
     },
     extraReducers: builder => builder
         .addCase(getByGenre.fulfilled, (state, action) => {
-            state.genreMovies = action.payload
+            state.genreMovies = action.payload;
+        })
+        .addMatcher(isRejected(), (state, action) => {
+            state.genreError = action.payload;
+        })
+        .addMatcher(isFulfilled(), (state) => {
+            state.genreError = null;
         })
 })
 

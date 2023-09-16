@@ -1,28 +1,28 @@
 import React, {useEffect, useState} from 'react';
 
 import css from './movieInfo.module.css';
-import {useAppDispatch, useAppLocation, useAppSelector} from "../../hooks";
-
-import {genreActions, movieActions} from "../../redux";
-
+import ImageNotSupportedOutlinedIcon from '@mui/icons-material/ImageNotSupportedOutlined';
 import ThumbsUpDownIcon from '@mui/icons-material/ThumbsUpDown';
 import StarIcon from '@mui/icons-material/Star';
-import {
-    Box, Button, Card, CardContent, CardMedia, Chip, Divider, Grid, Rating, Stack, Typography
-} from "@mui/material";
+
+import {useAppDispatch, useAppLocation, useAppSelector} from "../../hooks";
+import {genreActions, movieActions} from "../../redux";
+import {Box, Button, Card, CardContent, CardMedia, Chip, Divider, Grid, Rating, Stack, Typography} from "@mui/material";
 import {IGenre, IMovie} from "../../interfaces";
-import ImageNotSupportedOutlinedIcon from '@mui/icons-material/ImageNotSupportedOutlined';
 import {useNavigate} from "react-router-dom";
 
 const MovieInfo = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+
     const {genres, movieDetail, actors, movieForSearch} = useAppSelector(state => state.movieReducer)
     const {state: movie} = useAppLocation<IMovie>();
     const [actorsInfo, setActorsInfo] = useState<number>(3)
 
     useEffect(() => {
         dispatch(movieActions.allGenres());
+        dispatch(movieActions.allMovieDetails({id: movie.id.toString()}))
+        dispatch(movieActions.allActors({id: movie.id.toString()}));
     }, []);
 
     const currentMovieGenres: IGenre[] = [];
@@ -30,13 +30,6 @@ const MovieInfo = () => {
     genres.filter(genre => {
         movie.genre_ids.map(currentMovie => genre.id === currentMovie ? currentMovieGenres.push(genre) : null)
     })
-
-    console.log(movieDetail)
-
-    useEffect(() => {
-        dispatch(movieActions.allMovieDetails({id: movie.id.toString()}))
-        dispatch(movieActions.allActors({id: movie.id.toString()}));
-    }, []);
 
     const genreHandler = (id: string) => {
         dispatch(genreActions.setGenreId(id))
@@ -108,9 +101,10 @@ const MovieInfo = () => {
                                 <div style={{width: '20%', margin: '15px 5px'}} key={index}>
                                     {!actor.profile_path ?
                                         <Card sx={{maxWidth: 200}} style={{backgroundColor: '#efeaea'}}>
-                                           <div style={{height: '240px',backgroundColor: '#696868', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                                               <ImageNotSupportedOutlinedIcon fontSize={"large"}/>
-                                           </div>
+                                            <div
+                                                style={{height: '240px', backgroundColor: '#696868', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                                <ImageNotSupportedOutlinedIcon fontSize={"large"}/>
+                                            </div>
                                             <CardContent>
                                                 <Typography gutterBottom variant="h5" component="div">
                                                 </Typography>
@@ -179,7 +173,8 @@ const MovieInfo = () => {
                             </Typography>
                             <Stack direction="row" spacing={1}>
                                 {movieDetail?.genres.map((genre, index) => (
-                                    <Chip label={genre.name} key={index} color={'warning'} onClick={!movieForSearch ?() => genreHandler(genre.id.toString()) : error}/>
+                                    <Chip label={genre.name} key={index} color={'warning'}
+                                          onClick={!movieForSearch ? () => genreHandler(genre.id.toString()) : error}/>
                                 ))}
                             </Stack>
                         </Box>
@@ -201,8 +196,9 @@ const MovieInfo = () => {
                                 </a>
                                 <div>
 
-                                    {movieDetail?.spoken_languages.map(lang => (
-                                        <a style={{backgroundColor: '#212121', padding: '2px 5px 2px 5px', borderRadius: '5px', margin: '0 3px'}}>
+                                    {movieDetail?.spoken_languages.map((lang, index) => (
+                                        <a key={index}
+                                           style={{backgroundColor: '#212121', padding: '2px 5px 2px 5px', borderRadius: '5px', margin: '0 3px'}}>
                                             {lang?.name}
                                         </a>
                                     ))}
@@ -216,7 +212,8 @@ const MovieInfo = () => {
                             </Typography>
                             <Stack direction="row" spacing={1}>
                                 {movieDetail?.production_companies.map((company, index) => (
-                                    <a style={{backgroundColor: '#212121', padding: '5px 7px 5px 7px', borderRadius: '5px'}}>{company.name}</a>
+                                    <a key={index}
+                                       style={{backgroundColor: '#212121', padding: '5px 7px 5px 7px', borderRadius: '5px'}}>{company.name}</a>
                                 ))}
                             </Stack>
                         </Box>

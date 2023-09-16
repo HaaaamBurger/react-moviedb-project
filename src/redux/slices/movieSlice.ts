@@ -4,8 +4,6 @@ import {movieServices} from "../../services/movieServices";
 import {AxiosError} from "axios";
 import {IActors} from "../../interfaces/actorsInterface";
 
-
-
 interface IState {
     movies: IMovies;
     errRespond: {
@@ -124,20 +122,15 @@ const movieSlice = createSlice({
         .addMatcher(isFulfilled(), (state) => {
             state.errRespond = null
         })
-
 })
 
-const {reducer: movieReducer, actions: {setMoviePage,setError,setFilterMovie,setMovieForSearch,setMovies}} = movieSlice;
+const {reducer: movieReducer, actions} = movieSlice;
 
 const movieActions = {
+    ...actions,
     allMovies,
     allGenres,
     allMovieDetails,
-    setMoviePage,
-    setError,
-    setMovieForSearch,
-    setMovies,
-    setFilterMovie,
     allActors
 }
 

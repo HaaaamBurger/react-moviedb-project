@@ -37,10 +37,7 @@ body{
     text-decoration: underline;
 }
 .errorPos{
-    top: 100px;
-    right: 50px;
-    position: absolute;
-
+    margin-right: 50px;
 }
 .searchForm{
     display: flex;

@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 
 import css from './movieByGenre.module.css';
+
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {genreActions, movieActions} from "../../redux";
 import {Box, Button, Card, CardActions, CardContent, Typography} from "@mui/material";
@@ -11,8 +12,7 @@ const MovieByGenre = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
-    const {genreMovies} = useAppSelector(state => state.genreReducer)
-    const {genres,movieForSearch} = useAppSelector(state => state.movieReducer)
+    const {genres, movieForSearch,errRespond} = useAppSelector(state => state.movieReducer)
 
     useEffect(() => {
         dispatch(movieActions.allGenres());
@@ -23,9 +23,11 @@ const MovieByGenre = () => {
         navigate('/movies?page=1');
     }
 
-    const error = () => {
-        console.log('error');
+    console.log(errRespond)
+    const filterError = () => {
+        console.log('filter already switched on')
     }
+
     return (
         <div className={css.movieByGenreWrapper}>
             {genres.map((genre, index) =>
@@ -33,7 +35,6 @@ const MovieByGenre = () => {
                     <Box sx={{minWidth: 275}}>
                         <Card variant="outlined">{
                             <React.Fragment>
-
                                 <CardContent style={{backgroundColor: '#cbcbcb'}}>
                                     <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
                                         Genre:
@@ -44,7 +45,7 @@ const MovieByGenre = () => {
                                 </CardContent>
                                 <CardActions style={{backgroundColor: '#1e1d1d', color: 'white'}}>
                                     <Button size="small" color={'inherit'}
-                                            onClick={!movieForSearch ?() => genreHandler(genre.id.toString()) : error}>Open</Button>
+                                            onClick={!movieForSearch ? () => genreHandler(genre.id.toString()) : filterError}>Open</Button>
                                 </CardActions>
                             </React.Fragment>
                         }</Card>

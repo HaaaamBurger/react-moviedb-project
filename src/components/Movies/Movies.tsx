@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
+
+import css from './movies.module.css';
 
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {genreActions, movieActions} from "../../redux";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {Movie} from "../Movie";
-import css from './movies.module.css';
 import {movieServices} from "../../services/movieServices";
 
 
@@ -17,7 +18,7 @@ const Movies = () => {
     const [query, setQuery] = useSearchParams({page: '1'});
 
     useEffect(() => {
-        if (genreMovies){
+        if (genreMovies) {
             dispatch(movieActions.setMovies(genreMovies))
         }
     }, [genreMovies]);
@@ -38,7 +39,7 @@ const Movies = () => {
             })
         } else if (genreId) {
             if (genreId) {
-                    dispatch(genreActions.getByGenre({id: genreId, page: query.get('page')}));
+                dispatch(genreActions.getByGenre({id: genreId, page: query.get('page')}));
             } else {
                 navigate('/movies?page=1');
                 dispatch(movieActions.setMovieForSearch(null));
@@ -46,12 +47,12 @@ const Movies = () => {
         }
     }, [query, movieForSearch, genreId]);
 
-
     useEffect(() => {
-        if (errRespond) {
-            setQuery(prev => ({...prev, page: 1}))
+        if (errRespond?.errors) {
+            navigate('/movies?page=1');
         }
     }, [errRespond]);
+
 
     return (
         <div>
@@ -61,7 +62,8 @@ const Movies = () => {
                         movies.results.map(movie => <Movie key={movie.id} movie={movie}/>) :
                         genreMovies ?
                             genreMovies.results.map(movie => <Movie key={movie.id} movie={movie}/>) :
-                            filterMovie.length ? filterMovie.map(movie => <Movie key={movie.id} movie={movie}/>) : null
+                            filterMovie.length ? filterMovie.map(movie => <Movie key={movie.id}
+                                                                                 movie={movie}/>) : null
                 }
             </div>
         </div>

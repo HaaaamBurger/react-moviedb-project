@@ -1,25 +1,13 @@
 import React, {useEffect, useState} from 'react';
 
 import css from './header.module.css';
+import UndoIcon from '@mui/icons-material/Undo';
 
 import {NavLink, useNavigate} from "react-router-dom";
-import {
-    Alert,
-    Avatar,
-    Box,
-    Button,
-    Chip,
-    FormControlLabel,
-    FormGroup,
-    Grow, Paper,
-    Stack,
-    styled,
-    Switch
-} from "@mui/material";
+import {Avatar, Box, Button, Chip, FormControlLabel, FormGroup, Stack, styled, Switch} from "@mui/material";
 import {useAppDispatch, useAppLocation, useAppSelector} from "../../hooks";
 import {genreActions, movieActions, themeActions} from "../../redux";
 import {SearchField} from "./searchField";
-import UndoIcon from '@mui/icons-material/Undo';
 import {ErrorField} from "./errorField";
 
 const MaterialUISwitch = styled(Switch)(({theme}) => ({
@@ -74,12 +62,10 @@ const Header = () => {
     const navigate = useNavigate();
     const location = useAppLocation();
 
-
-    const {status} = useAppSelector(state => state.themeReducer);
-    const {errRespond, movieForSearch, movies: {page}, genres} = useAppSelector(state => state.movieReducer);
+    // const {status} = useAppSelector(state => state.themeReducer);
+    const { movieForSearch, genres} = useAppSelector(state => state.movieReducer);
     const {genreId} = useAppSelector(state => state.genreReducer);
     const [genreName, setGenreName] = useState<string>(null)
-
 
     useEffect(() => {
         if (genreId) {
@@ -135,6 +121,9 @@ const Header = () => {
             </div>
             <div style={{display: 'flex', alignItems: 'center'}}>
                 <div className={css.header_nav}>
+                    <div className={css.errorPos}>
+                        <ErrorField/>
+                    </div>
                     <NavLink to={'movies?page=1'}>Movies</NavLink>
                     <NavLink to={'genres'}>Genres</NavLink>
                 </div>
@@ -149,9 +138,7 @@ const Header = () => {
                     <Avatar>OM</Avatar>
                 </div>
             </div>
-            <div className={css.errorPos}>
-                <ErrorField/>
-            </div>
+
         </div>
     );
 };

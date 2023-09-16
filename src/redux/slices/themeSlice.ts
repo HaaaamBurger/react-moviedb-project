@@ -18,10 +18,11 @@ const themeSlice = createSlice({
     },
 })
 
-const {reducer: themeReducer, actions: {setThemeStatus}} = themeSlice;
+const {reducer: themeReducer, actions} = themeSlice;
 
 const themeActions = {
-    setThemeStatus
+    ...actions
+    // setThemeStatus
 }
 
 export {

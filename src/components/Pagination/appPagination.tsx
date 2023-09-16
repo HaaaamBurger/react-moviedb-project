@@ -1,7 +1,8 @@
 import React from 'react';
 
-import {Pagination, Stack} from "@mui/material";
 import css from './appPagination.module.css';
+
+import {Pagination, Stack} from "@mui/material";
 import {useSearchParams} from "react-router-dom";
 import {useAppSelector} from "../../hooks";
 
@@ -13,7 +14,7 @@ const AppPagination = () => {
     const handlePagination = (event: React.ChangeEvent<unknown>, value: number) => {
        setQuery(prev => ({...prev, page: value}))
     };
-    // movies?.total_pages > 500 ? 500 : movies?.total_pages || 1
+
     return (
         <div className={css.appPaginationWrapper}>
             <div>

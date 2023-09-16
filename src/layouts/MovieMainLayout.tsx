@@ -1,8 +1,9 @@
 import React from 'react';
 
+import css from './mainLayout.module.css';
+
 import {Header} from "../components";
 import {Outlet} from "react-router-dom";
-import css from './mainLayout.module.css';
 import {useAppSelector} from "../hooks";
 
 const MovieMainLayout = () => {
@@ -10,10 +11,10 @@ const MovieMainLayout = () => {
     const body = document.getElementsByTagName('body')[0];
 
     if (!status) {
-        body.classList.add(css.themeSwitcher)
+        body.classList.add(css.themeSwitcher);
     }
     else {
-        body.classList.remove(css.themeSwitcher)
+        body.classList.remove(css.themeSwitcher);
     }
 
     return (
