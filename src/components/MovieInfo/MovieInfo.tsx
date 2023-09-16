@@ -8,20 +8,10 @@ import {movieActions} from "../../redux";
 import ThumbsUpDownIcon from '@mui/icons-material/ThumbsUpDown';
 import StarIcon from '@mui/icons-material/Star';
 import {
-    Box,
-    Button,
-    Card,
-    CardActions,
-    CardContent,
-    CardMedia,
-    Chip,
-    Divider,
-    Grid,
-    Rating, Stack,
-    Typography
+    Box, Button, Card, CardContent, CardMedia, Chip, Divider, Grid, Rating, Stack, Typography
 } from "@mui/material";
 import {IGenre, IMovie} from "../../interfaces";
-import {movieServices} from "../../services/movieServices";
+import ImageNotSupportedOutlinedIcon from '@mui/icons-material/ImageNotSupportedOutlined';
 
 const MovieInfo = () => {
     const dispatch = useAppDispatch();
@@ -100,29 +90,56 @@ const MovieInfo = () => {
                 </div>
             </div>
             <div className={css.additionalInfoWrapper}>
-                <div style={{display: 'flex', overflow: 'hidden' ,flexWrap: 'wrap', justifyContent: 'center'}}>
-                    {actors?.cast.map((actor, index) => (
-                        index <= actorsInfo ?
-                            <div style={{width: '20%', margin: '5px'}} key={index}>
-
-                                <Card sx={{maxWidth: 200}} style={{backgroundColor: '#efeaea'}}>
-                                    <CardMedia
-                                        sx={{height: 240}}
-                                        image={`https://image.tmdb.org/t/p/original/${actor.profile_path}`}
-                                        title="green iguana"
-                                    />
-                                    <CardContent>
-                                        <Typography gutterBottom variant="h5" component="div">
-                                        </Typography>
-                                        <Typography variant="body2" color="text.secondary">
-                                            {actor.name}
-                                        </Typography>
-                                    </CardContent>
-                                </Card>
-                            </div> : null
-                    ))}
+                <div>
+                    <div style={{display: 'flex', overflow: 'hidden', flexWrap: 'wrap', justifyContent: 'center'}}>
+                        {actors?.cast.map((actor, index) => (
+                            index <= actorsInfo ?
+                                <div style={{width: '20%', margin: '15px 5px'}} key={index}>
+                                    {!actor.profile_path ?
+                                        <Card sx={{maxWidth: 200}} style={{backgroundColor: '#efeaea'}}>
+                                           <div style={{height: '240px',backgroundColor: '#696868', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                               <ImageNotSupportedOutlinedIcon fontSize={"large"}/>
+                                           </div>
+                                            <CardContent>
+                                                <Typography gutterBottom variant="h5" component="div">
+                                                </Typography>
+                                                <Typography variant="body2" color="text.secondary">
+                                                    {actor.name}
+                                                </Typography>
+                                            </CardContent>
+                                        </Card> :
+                                        <Card sx={{maxWidth: 200}} style={{backgroundColor: '#efeaea'}}>
+                                            <CardMedia
+                                                sx={{height: 240}}
+                                                image={`https://image.tmdb.org/t/p/original/${actor.profile_path}`}
+                                                title="green iguana"
+                                            />
+                                            <CardContent>
+                                                <Typography gutterBottom variant="h5" component="div">
+                                                </Typography>
+                                                <Typography variant="body2" color="text.secondary">
+                                                    {actor.name}
+                                                </Typography>
+                                            </CardContent>
+                                        </Card>
+                                    }
+                                </div> : null
+                        ))}
+                    </div>
+                    <div style={{display: 'flex', justifyContent: 'center', marginTop: '15px'}}>
+                        <Stack direction="row" spacing={2}>
+                            <Button variant="outlined" color="warning"
+                                    onClick={actorsInfo === 3 ? () => setActorsInfo(actors.cast.length) : () => setActorsInfo(3)}>
+                                {
+                                    actorsInfo === 3 ?
+                                        'SHOW MORE' :
+                                        'SHOW LESS'
+                                }
+                            </Button>
+                        </Stack>
+                    </div>
                 </div>
-                <div style={{padding: '10px', overflow: 'hidden', marginTop: '50px'}}>
+                <div style={{padding: '10px', overflow: 'hidden', marginTop: '30px'}}>
                     <Box
                         sx={{width: '100%', bgcolor: '#333333', color: 'white', borderRadius: '10px', padding: '10px', boxSizing: 'border-box', boxShadow: '0px 1px 2px 0px rgba(110,110,110,1)'}}>
                         <Box sx={{my: 3, mx: 2}}>
@@ -155,20 +172,42 @@ const MovieInfo = () => {
                         </Box>
                         <Divider variant="middle" color='white'/>
                         <Box sx={{m: 2}}>
-                            <Typography gutterBottom variant="body1">
-                               Something
+                            <Typography gutterBottom variant="body1"
+                                        style={{display: 'flex', justifyContent: 'space-between'}}>
+                                <a>
+                                    Budget
+                                </a>
+                                <a>
+                                    Spoken Languages
+                                </a>
                             </Typography>
-                            <Stack direction="row" spacing={1}>
+                            <Stack direction="row" spacing={1}
+                                   style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
+                                <a>
+                                    {movieDetail?.budget} $
+                                </a>
+                                <div>
 
+                                    {movieDetail?.spoken_languages.map(lang => (
+                                        <a style={{backgroundColor: '#212121', padding: '2px 5px 2px 5px', borderRadius: '5px', margin: '0 3px'}}>
+                                            {lang?.name}
+                                        </a>
+                                    ))}
+                                </div>
+                                {/*<a style={{backgroundColor: '#212121', padding: '5px 7px 5px 7px', borderRadius: '5px'}}>*/}
+                                {/*    {movieDetail?.original_language}*/}
+                                {/*</a>*/}
                             </Stack>
                         </Box>
                         <Divider variant="middle" color='white'/>
                         <Box sx={{m: 2}}>
                             <Typography gutterBottom variant="body1">
-                                Something
+                                Production Companies
                             </Typography>
                             <Stack direction="row" spacing={1}>
-
+                                {movieDetail?.production_companies.map((company, index) => (
+                                    <a style={{backgroundColor: '#212121', padding: '5px 7px 5px 7px', borderRadius: '5px'}}>{company.name}</a>
+                                ))}
                             </Stack>
                         </Box>
                     </Box>

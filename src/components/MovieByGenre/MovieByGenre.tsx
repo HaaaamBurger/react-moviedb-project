@@ -33,6 +33,7 @@ const MovieByGenre = () => {
                     <Box sx={{minWidth: 275}}>
                         <Card variant="outlined">{
                             <React.Fragment>
+
                                 <CardContent style={{backgroundColor: '#cbcbcb'}}>
                                     <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
                                         Genre:

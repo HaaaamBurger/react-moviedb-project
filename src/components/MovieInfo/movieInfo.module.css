@@ -12,6 +12,7 @@
 .movieHeader {
     background-size: cover;
     background-repeat: no-repeat;
+    background-color: #333333;
 
     display: flex;
     justify-content: flex-start;
@@ -83,7 +84,7 @@
 .additionalInfoWrapper{
     padding: 70px 20% 20px 20%;
 
-    /*flex-wrap: wrap;*/
+    min-width: 500px;
     align-items: center;
     justify-content: center;
 }
