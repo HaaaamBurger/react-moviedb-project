@@ -126,18 +126,20 @@ const MovieInfo = () => {
                                 </div> : null
                         ))}
                     </div>
-                    <div style={{display: 'flex', justifyContent: 'center', marginTop: '15px'}}>
-                        <Stack direction="row" spacing={2}>
-                            <Button variant="outlined" color="warning"
-                                    onClick={actorsInfo === 3 ? () => setActorsInfo(actors.cast.length) : () => setActorsInfo(3)}>
-                                {
-                                    actorsInfo === 3 ?
-                                        'SHOW MORE' :
-                                        'SHOW LESS'
-                                }
-                            </Button>
-                        </Stack>
-                    </div>
+                    {actors?.cast?.length > 3 ?
+                        <div style={{display: 'flex', justifyContent: 'center', marginTop: '15px'}}>
+                            <Stack direction="row" spacing={2}>
+                                <Button variant="outlined" color="warning"
+                                        onClick={actorsInfo === 3 ? () => setActorsInfo(actors.cast.length) : () => setActorsInfo(3)}>
+                                    {
+                                        actorsInfo === 3 ?
+                                            'SHOW MORE' :
+                                            'SHOW LESS'
+                                    }
+                                </Button>
+                            </Stack>
+                        </div> : null
+                    }
                 </div>
                 <div style={{padding: '10px', overflow: 'hidden', marginTop: '30px'}}>
                     <Box
