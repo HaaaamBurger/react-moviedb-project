@@ -1,7 +1,8 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, isRejected} from "@reduxjs/toolkit";
 import {IGenre, IMovie, IMovieDetails, IMovies} from "../../interfaces";
 import {movieServices} from "../../services/movieServices";
 import {AxiosError} from "axios";
+import {IActors} from "../../interfaces/actorsInterface";
 
 
 
@@ -13,7 +14,8 @@ interface IState {
     genres: IGenre[],
     movieForSearch: string,
     filterMovie: IMovie[],
-    movieDetail: IMovieDetails
+    movieDetail: IMovieDetails,
+    actors: IActors
 }
 
 const initialState: IState = {
@@ -27,11 +29,25 @@ const initialState: IState = {
     genres: [],
     movieForSearch: null,
     filterMovie: [],
-    movieDetail: null
+    movieDetail: null,
+    actors: null
 }
 
+const allActors = createAsyncThunk<IActors, {id: string}>(
+    'movieSlice/allActors',
+    async ({id}, {rejectWithValue}) => {
+        try {
+            const {data} = await movieServices.getActors(id)
+            return data;
+        }catch (e) {
+            const err = e as AxiosError;
+            return rejectWithValue(err.response.data);
+        }
+    }
+)
+
 const allGenres = createAsyncThunk<IGenre[],void>(
-    'allGenres',
+    'movieSlice/allGenres',
     async (_, {rejectWithValue}) => {
         try {
             const {data} = await movieServices.getGenres();
@@ -94,15 +110,19 @@ const movieSlice = createSlice({
             state.movies = action.payload;
             state.errRespond = null;
         })
-        .addCase(allMovies.rejected, (state, action) => {
-            state.errRespond = action.payload
-        })
         .addCase(allGenres.fulfilled,(state, action) => {
             state.genres = action.payload
         })
         .addCase(allMovieDetails.fulfilled, (state, action) => {
             state.movieDetail = action.payload;
         })
+        .addCase(allActors.fulfilled, (state, action) => {
+            state.actors = action.payload
+        })
+        .addMatcher(isRejected(), (state, action) => {
+            state.errRespond = action.payload
+        })
+
 })
 
 const {reducer: movieReducer, actions: {setMoviePage,setError,setFilterMovie,setMovieForSearch,setMovies}} = movieSlice;
@@ -115,7 +135,8 @@ const movieActions = {
     setError,
     setMovieForSearch,
     setMovies,
-    setFilterMovie
+    setFilterMovie,
+    allActors
 }
 
 export {

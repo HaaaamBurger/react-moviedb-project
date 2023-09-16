@@ -3,11 +3,24 @@ import React, {useEffect, useState} from 'react';
 import css from './header.module.css';
 
 import {NavLink, useNavigate} from "react-router-dom";
-import {Alert, Avatar, Box, Button, Chip, FormControlLabel, FormGroup, Stack, styled, Switch} from "@mui/material";
+import {
+    Alert,
+    Avatar,
+    Box,
+    Button,
+    Chip,
+    FormControlLabel,
+    FormGroup,
+    Grow, Paper,
+    Stack,
+    styled,
+    Switch
+} from "@mui/material";
 import {useAppDispatch, useAppLocation, useAppSelector} from "../../hooks";
 import {genreActions, movieActions, themeActions} from "../../redux";
 import {SearchField} from "./searchField";
 import UndoIcon from '@mui/icons-material/Undo';
+import {ErrorField} from "./errorField";
 
 const MaterialUISwitch = styled(Switch)(({theme}) => ({
     width: 62,
@@ -67,7 +80,6 @@ const Header = () => {
     const {genreId} = useAppSelector(state => state.genreReducer);
     const [genreName, setGenreName] = useState<string>(null)
 
-    const [pageError, setPageError] = useState<boolean>(false);
 
     useEffect(() => {
         if (genreId) {
@@ -76,17 +88,6 @@ const Header = () => {
             setGenreName(name);
         }
     }, [genreId]);
-
-    useEffect(() => {
-        if (errRespond?.errors) {
-            setPageError(true)
-            setTimeout(() => {
-                setPageError(false);
-            }, 2000)
-        }
-    }, [errRespond]);
-
-    // const [checked, setChecked] = useState<boolean>(status);
 
     const handleChangeSwitch = (event: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(themeActions.setThemeStatus(event.target.checked))
@@ -116,14 +117,16 @@ const Header = () => {
                             </Stack> :
                             genreId ?
                                 <Stack direction="row" spacing={1}>
-                                    <Chip label={genreName} variant="outlined" color={'default'} onDelete={handleDeleteId}
+                                    <Chip label={genreName} variant="outlined" color={'default'}
+                                          onDelete={handleDeleteId}
                                           style={{color: 'white', fontSize: '17px'}}/>
                                 </Stack> : null
                     }
                     {
                         location.pathname !== '/movies' ?
-                            <Box sx={{ '& button': { m: 1 } }} style={{marginLeft: '15px'}}>
-                                <Button variant="contained" style={{backgroundColor: '#938f8f'}} size="medium" onClick={() => navigate(-1)}>
+                            <Box sx={{'& button': {m: 1}}} style={{marginLeft: '15px'}}>
+                                <Button variant="contained" style={{backgroundColor: '#938f8f'}} size="medium"
+                                        onClick={() => navigate(-1)}>
                                     <UndoIcon/>
                                 </Button>
                             </Box> : null
@@ -147,13 +150,7 @@ const Header = () => {
                 </div>
             </div>
             <div className={css.errorPos}>
-                {pageError && (
-                    <div>
-                        <Stack sx={{width: '100%'}} spacing={2}>
-                            <Alert severity="error">Paging error!</Alert>
-                        </Stack>
-                    </div>
-                )}
+                <ErrorField/>
             </div>
         </div>
     );

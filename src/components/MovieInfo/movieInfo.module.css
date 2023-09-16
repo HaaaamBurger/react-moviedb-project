@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow&display=swap');
-.movieInfoWrapper{
+
+.movieInfoWrapper {
     width: 100%;
     padding-top: 100px;
     display: flex;
@@ -7,7 +8,8 @@
     align-items: center;
 
 }
-.movieHeader{
+
+.movieHeader {
     background-size: cover;
     background-repeat: no-repeat;
 
@@ -21,13 +23,14 @@
     font-family: 'Barlow', sans-serif;
     box-shadow: 0px 3px 3px 0px rgb(17, 17, 17);
     overflow: hidden;
-
 }
-.movieHeader img{
+
+.movieHeader img {
     width: 340px;
     border-radius: 10px;
 }
-.movieInfo{
+
+.movieInfo {
     color: aliceblue;
     margin-left: 40px;
     background-color: #333333;
@@ -36,35 +39,62 @@
     padding: 20px;
     box-sizing: border-box;
 }
-.movieInfo h2{
+
+.movieInfo h2 {
     margin-bottom: 0;
     font-size: 2.4em;
 
 }
-.genreBar a{
+
+.genreBar a {
     margin: 0 3px;
 }
-.movieRating{
+
+.movieRating {
     display: flex;
 
     align-items: center;
 }
-.movieRating > div > h3{
+
+.movieRating > div > h3 {
     margin-right: 0;
 }
-.movieRating div:first-child{
+
+.movieRating div:first-child {
     display: flex;
     align-items: center;
     margin: 0 30px 0 0;
 }
-.movieRating h3{
+
+.movieRating h3 {
     margin-right: 8px;
 }
-.overview h2{
+
+.overview h2 {
     margin-top: 0;
 }
-.rateVotes div:last-child{
+
+.rateVotes div:last-child {
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
+.additionalInfoWrapper{
+    padding: 70px 20% 20px 20%;
+
+    /*flex-wrap: wrap;*/
+    align-items: center;
+    justify-content: center;
+}
+.badgeWrapper{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.badgeWrapper div{
+    color: white;
+}
+
+
