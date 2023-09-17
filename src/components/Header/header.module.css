@@ -7,7 +7,6 @@ body{
     align-items: center;
 }
 .headerWrapper{
-    position: fixed;
     width: 100%;
 }
 .header{
@@ -20,7 +19,7 @@ body{
     align-items: center;
     background-color: #333333;
     opacity: 97%;
-    height: 60px;
+    height: 75px;
     box-shadow: 0 3px 3px 0 rgb(17, 17, 17);
 
     font-family: 'Barlow', sans-serif;

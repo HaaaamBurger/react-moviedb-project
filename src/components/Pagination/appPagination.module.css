@@ -1,11 +1,12 @@
 .appPaginationWrapper{
-    padding: 30px 0 30px 0;
+    padding: 0 0 30px 0;
     width: 100%;
     display: flex;
     justify-content: center;
 }
 .Pagionation ul li button{
-    background-color: #948e8e;
+    width: 50px;
+    background-color: #333333;
     color: aliceblue;
     font-size: 1em;
 }

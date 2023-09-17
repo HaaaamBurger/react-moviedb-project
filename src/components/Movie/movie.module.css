@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow&display=swap');
 .movieWrapper{
-    margin: 2px 5px;
+    margin: 6px 10px;
 }
 .movieWrapper img{
-    width: 300px;
+    width: 350px;
     border-radius: 10px;
 }
 .noMovie{

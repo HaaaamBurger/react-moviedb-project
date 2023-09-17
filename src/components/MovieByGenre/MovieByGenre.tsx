@@ -45,7 +45,7 @@ const MovieByGenre = () => {
                                 </CardContent>
                                 <CardActions style={{backgroundColor: '#1e1d1d', color: 'white'}}>
                                     <Button size="small" color={'inherit'}
-                                            onClick={!movieForSearch ? () => genreHandler(genre.id.toString()) : filterError}>Open</Button>
+                                            onClick={!movieForSearch ? () => genreHandler(genre.id.toString()) : filterError}>SHOW</Button>
                                 </CardActions>
                             </React.Fragment>
                         }</Card>

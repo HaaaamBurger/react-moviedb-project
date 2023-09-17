@@ -2,7 +2,7 @@
 
 .movieInfoWrapper {
     width: 100%;
-    padding-top: 100px;
+    padding-top: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -32,13 +32,14 @@
 }
 
 .movieInfo {
+    opacity: 80%;
     overflow: hidden;
     min-width: 300px;
     max-height: 510px;
     color: aliceblue;
     margin-left: 40px;
-    background: rgb(64,62,62);
-    background: linear-gradient(30deg, rgba(64,62,62,1) 0%, rgba(119,115,115,1) 100%);
+    background: rgb(24,24,24);
+    background: linear-gradient(30deg, rgba(24,24,24,1) 0%, rgba(119,115,115,1) 100%);
     border-radius: 10px;
     padding: 20px;
     box-sizing: border-box;
