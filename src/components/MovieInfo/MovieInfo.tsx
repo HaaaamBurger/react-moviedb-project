@@ -37,7 +37,7 @@ const MovieInfo = () => {
     }
 
     const error = () => {
-        console.log('error');
+        dispatch(genreActions.setFilterError(true));
     }
 
     return (

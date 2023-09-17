@@ -5,10 +5,10 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 import {useNavigate} from "react-router-dom";
 import {movieActions} from "../../redux";
 
-const requestIcon = (
-    <Stack sx={{ width: '100%' }} spacing={2}>
+const icon = (
+    <Stack sx={{width: '100%'}} spacing={2}>
         <Alert variant="outlined" severity="error" style={{color: 'white'}}>
-                Somehting went wrong!
+            Somehting went wrong!
         </Alert>
     </Stack>
 );
@@ -34,11 +34,9 @@ const ErrorField = () => {
 
     return (
         <div>
-            {
-                <Box sx={{display: 'flex'}}>
-                    <Grow in={pageError}>{requestIcon}</Grow>
-                </Box>
-            }
+            <Box sx={{display: 'flex'}}>
+                <Grow in={pageError}>{icon}</Grow>
+            </Box>
         </div>
     );
 };

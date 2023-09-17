@@ -19,6 +19,7 @@ import {useAppDispatch, useAppLocation, useAppSelector} from "../../hooks";
 import {genreActions, movieActions, themeActions} from "../../redux";
 import {SearchField} from "./searchField";
 import {ErrorField} from "./errorField";
+import {UsedFilter} from "./usedFilter";
 
 const MaterialUISwitch = styled(Switch)(({theme}) => ({
     width: 62,
@@ -73,8 +74,8 @@ const Header = () => {
     const location = useAppLocation();
 
     // const {status} = useAppSelector(state => state.themeReducer);
-    const {movieForSearch, genres} = useAppSelector(state => state.movieReducer);
-    const {genreId} = useAppSelector(state => state.genreReducer);
+    const {movieForSearch, genres,errRespond} = useAppSelector(state => state.movieReducer);
+    const {genreId,filterError} = useAppSelector(state => state.genreReducer);
     const [genreName, setGenreName] = useState<string>(null)
 
     useEffect(() => {
@@ -133,7 +134,12 @@ const Header = () => {
                 <div style={{display: 'flex', alignItems: 'center'}}>
                     <div className={css.header_nav}>
                         <div className={css.errorPos}>
-                            <ErrorField/>
+                            <div style={{position: 'fixed'}}>
+                                <ErrorField/>
+                            </div>
+                            <div>
+                                <UsedFilter/>
+                            </div>
                         </div>
                         <NavLink to={'movies?page=1'}>Movies</NavLink>
                         <NavLink to={'genres'}>Genres</NavLink>

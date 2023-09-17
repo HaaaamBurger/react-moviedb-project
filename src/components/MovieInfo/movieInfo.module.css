@@ -36,7 +36,8 @@
     min-width: 300px;
     color: aliceblue;
     margin-left: 40px;
-    background-color: #424242;
+    background: rgb(64,62,62);
+    background: linear-gradient(30deg, rgba(64,62,62,1) 0%, rgba(119,115,115,1) 100%);
     border-radius: 10px;
     padding: 20px;
     box-sizing: border-box;

@@ -12,7 +12,8 @@ const MovieByGenre = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
-    const {genres, movieForSearch,errRespond} = useAppSelector(state => state.movieReducer)
+    const {genres, movieForSearch} = useAppSelector(state => state.movieReducer)
+
 
     useEffect(() => {
         dispatch(movieActions.allGenres());
@@ -22,10 +23,9 @@ const MovieByGenre = () => {
         dispatch(genreActions.setGenreId(id))
         navigate('/movies?page=1');
     }
-
-    console.log(errRespond)
+    console.log()
     const filterError = () => {
-        console.log('filter already switched on')
+        dispatch(genreActions.setFilterError(true));
     }
 
     return (
