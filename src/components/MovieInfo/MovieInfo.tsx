@@ -153,17 +153,17 @@ const MovieInfo = () => {
                             <Grid container alignItems="center">
                                 <Grid item xs>
                                     <Typography gutterBottom variant="h4" component="div">
-                                        {movieDetail?.title}
+                                        {movieDetail?.title || '-'}
                                     </Typography>
                                 </Grid>
                                 <Grid item>
                                     <Typography gutterBottom variant="h6" component="div">
-                                        {movieDetail?.status}
+                                        {movieDetail?.status || '-'}
                                     </Typography>
                                 </Grid>
                             </Grid>
                             <Typography color="white" variant="body2">
-                                Runtime: {`${Math.floor(movieDetail?.runtime / 60)}hr ${movieDetail?.runtime % 60}min`}
+                                Runtime: {`${Math.floor(movieDetail?.runtime / 60)}hr ${movieDetail?.runtime % 60}min` || '-'}
                             </Typography>
                         </Box>
                         <Divider variant="middle" color='white'/>
@@ -192,14 +192,17 @@ const MovieInfo = () => {
                             <Stack direction="row" spacing={1}
                                    style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
                                 <a>
-                                    {movieDetail?.budget} $
+                                    {movieDetail?.budget ?
+                                            `${movieDetail?.budget} $` :
+                                                    '-'
+                                    }
                                 </a>
                                 <div>
 
                                     {movieDetail?.spoken_languages.map((lang, index) => (
                                         <a key={index}
                                            style={{backgroundColor: '#212121', padding: '2px 5px 2px 5px', borderRadius: '5px', margin: '0 3px'}}>
-                                            {lang?.name}
+                                            {lang?.name || '-'}
                                         </a>
                                     ))}
                                 </div>
@@ -213,7 +216,7 @@ const MovieInfo = () => {
                             <Stack direction="row" spacing={1}>
                                 {movieDetail?.production_companies.map((company, index) => (
                                     <a key={index}
-                                       style={{backgroundColor: '#212121', padding: '5px 7px 5px 7px', borderRadius: '5px'}}>{company.name}</a>
+                                       style={{backgroundColor: '#212121', padding: '5px 7px 5px 7px', borderRadius: '5px'}}>{company.name || '-'}</a>
                                 ))}
                             </Stack>
                         </Box>

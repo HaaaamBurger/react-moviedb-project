@@ -34,6 +34,7 @@
 .movieInfo {
     overflow: hidden;
     min-width: 300px;
+    max-height: 510px;
     color: aliceblue;
     margin-left: 40px;
     background: rgb(64,62,62);

@@ -18,7 +18,7 @@ const AppPagination = () => {
         <div className={css.appPaginationWrapper}>
             <div>
                 <Stack spacing={2}>
-                    <Pagination className={css.Pagionation} count={ movies?.total_pages > 500 ? 500 : movies?.total_pages} variant="outlined" shape="rounded" color={"standard"} onChange={handlePagination} page={+query.get('page')} />
+                    <Pagination className={css.Pagionation} count={+movies?.total_pages > 500 ? 500 : +movies?.total_pages} variant="outlined" shape="rounded" color={"standard"} onChange={handlePagination} page={+query.get('page')} />
                 </Stack>
             </div>
         </div>
