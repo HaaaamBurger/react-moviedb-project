@@ -6,13 +6,12 @@ import {Pagination, Stack} from "@mui/material";
 import {useSearchParams} from "react-router-dom";
 import {useAppSelector} from "../../hooks";
 
-
 const AppPagination = () => {
-    const [query,setQuery] = useSearchParams();
     const {movies} = useAppSelector(state => state.movieReducer)
+    const [query,setQuery] = useSearchParams();
 
     const handlePagination = (event: React.ChangeEvent<unknown>, value: number) => {
-       setQuery(prev => ({...prev, page: value}))
+       setQuery(prev => ({...prev, page: value}));
     };
 
     return (

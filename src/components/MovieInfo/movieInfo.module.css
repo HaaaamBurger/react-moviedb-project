@@ -6,7 +6,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
+    min-width: 850px;
 }
 
 .movieHeader {
@@ -32,19 +32,20 @@
 }
 
 .movieInfo {
+    overflow: hidden;
+    min-width: 300px;
     color: aliceblue;
     margin-left: 40px;
-    background-color: #333333;
-    opacity: 80%;
+    background-color: #424242;
     border-radius: 10px;
     padding: 20px;
     box-sizing: border-box;
+
 }
 
 .movieInfo h2 {
     margin-bottom: 0;
     font-size: 2.4em;
-
 }
 
 .genreBar a {
@@ -53,7 +54,6 @@
 
 .movieRating {
     display: flex;
-
     align-items: center;
 }
 

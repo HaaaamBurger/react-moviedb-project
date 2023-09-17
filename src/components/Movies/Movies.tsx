@@ -29,7 +29,7 @@ const Movies = () => {
             setQuery(prev => ({...prev, page: prev.get('page')}));
 
         } else if (movieForSearch) {
-            movieServices.getMoviesByKeyword(movieForSearch, query.get('page')).then(({data}) => {
+                movieServices.getMoviesByKeyword(movieForSearch, query.get('page')).then(({data}) => {
                 if (data.results.length) {
                     dispatch(movieActions.setMovies(data));
                 } else {
@@ -53,7 +53,6 @@ const Movies = () => {
         }
     }, [errRespond]);
 
-
     return (
         <div>
             <div className={css.moviesWrapper}>
@@ -62,8 +61,7 @@ const Movies = () => {
                         movies.results.map(movie => <Movie key={movie.id} movie={movie}/>) :
                         genreMovies ?
                             genreMovies.results.map(movie => <Movie key={movie.id} movie={movie}/>) :
-                            filterMovie.length ? filterMovie.map(movie => <Movie key={movie.id}
-                                                                                 movie={movie}/>) : null
+                            filterMovie.length ? filterMovie.map(movie => <Movie key={movie.id} movie={movie}/>) : null
                 }
             </div>
         </div>

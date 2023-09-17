@@ -4,7 +4,17 @@ import css from './header.module.css';
 import UndoIcon from '@mui/icons-material/Undo';
 
 import {NavLink, useNavigate} from "react-router-dom";
-import {Avatar, Box, Button, Chip, FormControlLabel, FormGroup, Stack, styled, Switch} from "@mui/material";
+import {
+    Avatar,
+    Box,
+    Button,
+    Chip,
+    FormControlLabel,
+    FormGroup,
+    Stack,
+    styled,
+    Switch
+} from "@mui/material";
 import {useAppDispatch, useAppLocation, useAppSelector} from "../../hooks";
 import {genreActions, movieActions, themeActions} from "../../redux";
 import {SearchField} from "./searchField";
@@ -63,7 +73,7 @@ const Header = () => {
     const location = useAppLocation();
 
     // const {status} = useAppSelector(state => state.themeReducer);
-    const { movieForSearch, genres} = useAppSelector(state => state.movieReducer);
+    const {movieForSearch, genres} = useAppSelector(state => state.movieReducer);
     const {genreId} = useAppSelector(state => state.genreReducer);
     const [genreName, setGenreName] = useState<string>(null)
 
@@ -90,55 +100,56 @@ const Header = () => {
     };
 
     return (
-        <div className={css.header}>
-            <div style={{display: 'flex'}}>
-                <NavLink to={'movies?page=1'} style={{textDecoration: 'none'}}>Movie DB</NavLink>
-                <div style={{display: 'flex', alignItems: 'center'}}>
-                    <SearchField/>
-                    {
-                        movieForSearch ?
-                            <Stack direction="row" spacing={1}>
-                                <Chip label={movieForSearch} variant="outlined" color={'default'}
-                                      onDelete={handleDeleteSearch} style={{color: 'white', fontSize: '17px'}}/>
-                            </Stack> :
-                            genreId ?
+        <div className={css.headerWrapper}>
+            <div className={css.header}>
+                <div style={{display: 'flex'}}>
+                    <NavLink to={'movies?page=1'} style={{textDecoration: 'none'}}>Movie DB</NavLink>
+                    <div style={{display: 'flex', alignItems: 'center'}}>
+                        <SearchField/>
+                        {
+                            movieForSearch ?
                                 <Stack direction="row" spacing={1}>
-                                    <Chip label={genreName} variant="outlined" color={'default'}
-                                          onDelete={handleDeleteId}
-                                          style={{color: 'white', fontSize: '17px'}}/>
-                                </Stack> : null
-                    }
-                    {
-                        location.pathname !== '/movies' ?
-                            <Box sx={{'& button': {m: 1}}} style={{marginLeft: '15px'}}>
-                                <Button variant="contained" style={{backgroundColor: '#938f8f'}} size="medium"
-                                        onClick={() => navigate(-1)}>
-                                    <UndoIcon/>
-                                </Button>
-                            </Box> : null
-                    }
-                </div>
-            </div>
-            <div style={{display: 'flex', alignItems: 'center'}}>
-                <div className={css.header_nav}>
-                    <div className={css.errorPos}>
-                        <ErrorField/>
+                                    <Chip label={movieForSearch} variant="outlined" color={'default'}
+                                          onDelete={handleDeleteSearch} style={{color: 'white', fontSize: '17px'}}/>
+                                </Stack> :
+                                genreId ?
+                                    <Stack direction="row" spacing={1}>
+                                        <Chip label={genreName} variant="outlined" color={'default'}
+                                              onDelete={handleDeleteId}
+                                              style={{color: 'white', fontSize: '17px'}}/>
+                                    </Stack> : null
+                        }
+                        {
+                            location.pathname !== '/movies' ?
+                                <Box sx={{'& button': {m: 1}}} style={{marginLeft: '15px'}}>
+                                    <Button variant="contained" style={{backgroundColor: '#938f8f'}} size="medium"
+                                            onClick={() => navigate(-1)}>
+                                        <UndoIcon/>
+                                    </Button>
+                                </Box> : null
+                        }
                     </div>
-                    <NavLink to={'movies?page=1'}>Movies</NavLink>
-                    <NavLink to={'genres'}>Genres</NavLink>
                 </div>
-                <div>
-                    <FormGroup onChange={handleChangeSwitch}>
-                        <FormControlLabel
-                            control={<MaterialUISwitch sx={{m: 1}} defaultChecked/>}
-                            label={''}/>
-                    </FormGroup>
-                </div>
-                <div>
-                    <Avatar>OM</Avatar>
+                <div style={{display: 'flex', alignItems: 'center'}}>
+                    <div className={css.header_nav}>
+                        <div className={css.errorPos}>
+                            <ErrorField/>
+                        </div>
+                        <NavLink to={'movies?page=1'}>Movies</NavLink>
+                        <NavLink to={'genres'}>Genres</NavLink>
+                    </div>
+                    <div>
+                        <FormGroup onChange={handleChangeSwitch}>
+                            <FormControlLabel
+                                control={<MaterialUISwitch sx={{m: 1}} defaultChecked/>}
+                                label={''}/>
+                        </FormGroup>
+                    </div>
+                    <div>
+                        <Avatar>OM</Avatar>
+                    </div>
                 </div>
             </div>
-
         </div>
     );
 };

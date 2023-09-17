@@ -80,7 +80,7 @@ const MovieInfo = () => {
                                     }}
                                 >
                                     <Typography component="legend"></Typography>
-                                    <Rating name="customized-10" readOnly defaultValue={movie.vote_average} max={10}/>
+                                    <Rating name="customized-10" readOnly defaultValue={movie.vote_average} max={10} />
                                 </Box>
                             </div>
                         </div>
