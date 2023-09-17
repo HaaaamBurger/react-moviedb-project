@@ -143,6 +143,7 @@ const Header = () => {
                         </div>
                         <NavLink to={'movies?page=1'}>Movies</NavLink>
                         <NavLink to={'genres'}>Genres</NavLink>
+                        <NavLink to={'favourites'}>Favourites</NavLink>
                     </div>
                     <div>
                         <FormGroup onChange={handleChangeSwitch}>
