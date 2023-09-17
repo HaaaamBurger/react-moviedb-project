@@ -29,10 +29,11 @@ const MovieInfo = () => {
     }, []);
 
     useEffect(() => {
-        const favourites: IMovie[] = JSON.parse(localStorage.getItem('favourites')) || [];
         favourites.map(favMovie => favMovie.id === movie.id ? setMovieForFavourite(favMovie) : null);
+
     }, []);
 
+    const favourites: IMovie[] = JSON.parse(localStorage.getItem('favourites')) || [];
     const currentMovieGenres: IGenre[] = [];
 
     genres.filter(genre => {
@@ -49,14 +50,13 @@ const MovieInfo = () => {
     }
 
     const addToFav = (movieData: IMovie): void => {
-        const favourites = JSON.parse(localStorage.getItem('favourites')) || [];
         favourites.push(movieData);
         localStorage.setItem('favourites', JSON.stringify(favourites));
     }
 
     const removeFromFav = () => {
-        const favourites = JSON.parse(localStorage.getItem('favourites')) || [];
-
+        const newFavourites = favourites.filter(favMovie => favMovie.id !== movie.id);
+        localStorage.setItem('favourites', JSON.stringify(newFavourites))
     }
 
     return (
