@@ -29,6 +29,7 @@ const MovieInfo = () => {
     }, [movieDetail]);
 
     useEffect(() => {
+        dispatch(movieActions.allGenres())
         dispatch(movieActions.allMovieDetails({id: movieId}))
         dispatch(movieActions.allActors({id: movieId}));
     }, [movieId]);

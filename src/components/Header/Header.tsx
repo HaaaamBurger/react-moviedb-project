@@ -75,9 +75,8 @@ const Header = () => {
     const navigate = useNavigate();
     const location = useAppLocation();
 
-    // const {status} = useAppSelector(state => state.themeReducer);
-    const {movieForSearch, genres,errRespond} = useAppSelector(state => state.movieReducer);
-    const {genreId,filterError} = useAppSelector(state => state.genreReducer);
+    const {movieForSearch, genres} = useAppSelector(state => state.movieReducer);
+    const {genreId} = useAppSelector(state => state.genreReducer);
     const [genreName, setGenreName] = useState<string>(null)
 
     useEffect(() => {
@@ -137,7 +136,7 @@ const Header = () => {
                                     localStorage.removeItem('favourites');
                                     navigate('movies')
                                 }}>
-                                <DeleteOutlineTwoToneIcon />
+                                    <DeleteOutlineTwoToneIcon/>
                                 </Button> : null
                         }
                     </div>
