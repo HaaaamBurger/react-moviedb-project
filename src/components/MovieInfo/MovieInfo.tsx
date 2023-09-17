@@ -4,6 +4,8 @@ import css from './movieInfo.module.css';
 import ImageNotSupportedOutlinedIcon from '@mui/icons-material/ImageNotSupportedOutlined';
 import ThumbsUpDownIcon from '@mui/icons-material/ThumbsUpDown';
 import StarIcon from '@mui/icons-material/Star';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
 
 import {useAppDispatch, useAppLocation, useAppSelector} from "../../hooks";
 import {genreActions, movieActions} from "../../redux";
@@ -17,12 +19,18 @@ const MovieInfo = () => {
 
     const {genres, movieDetail, actors, movieForSearch} = useAppSelector(state => state.movieReducer)
     const {state: movie} = useAppLocation<IMovie>();
-    const [actorsInfo, setActorsInfo] = useState<number>(3)
+    const [actorsInfo, setActorsInfo] = useState<number>(3);
+    const [movieForFavourite, setMovieForFavourite] = useState<IMovie>(null);
 
     useEffect(() => {
         dispatch(movieActions.allGenres());
         dispatch(movieActions.allMovieDetails({id: movie.id.toString()}))
         dispatch(movieActions.allActors({id: movie.id.toString()}));
+    }, []);
+
+    useEffect(() => {
+        const favourites: IMovie[] = JSON.parse(localStorage.getItem('favourites')) || [];
+        favourites.map(favMovie => favMovie.id === movie.id ? setMovieForFavourite(favMovie) : null);
     }, []);
 
     const currentMovieGenres: IGenre[] = [];
@@ -40,6 +48,17 @@ const MovieInfo = () => {
         dispatch(genreActions.setFilterError(true));
     }
 
+    const addToFav = (movieData: IMovie): void => {
+        const favourites = JSON.parse(localStorage.getItem('favourites')) || [];
+        favourites.push(movieData);
+        localStorage.setItem('favourites', JSON.stringify(favourites));
+    }
+
+    const removeFromFav = () => {
+        const favourites = JSON.parse(localStorage.getItem('favourites')) || [];
+
+    }
+
     return (
         <div>
             <div className={css.movieInfoWrapper}>
@@ -49,7 +68,15 @@ const MovieInfo = () => {
                         <img src={`https://image.tmdb.org/t/p/w500${movie?.poster_path}`} alt=""/>
                     </div>
                     <div className={css.movieInfo}>
-                        <h2>{movie.title}</h2>
+                        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                            <h2>{movie.title}</h2>
+
+                            {
+                                !movieForFavourite ?
+                                    <BookmarkBorderIcon style={{fontSize: '34px'}} onClick={() => addToFav(movie)}/> :
+                                        <BookmarkIcon style={{fontSize: '34px'}} onClick={() => removeFromFav()}/>
+                            }
+                        </div>
                         <div className={css.genreBar}>
                             {movie.release_date}・
                             {currentMovieGenres.map((movieGenre) => {
@@ -80,7 +107,7 @@ const MovieInfo = () => {
                                     }}
                                 >
                                     <Typography component="legend"></Typography>
-                                    <Rating name="customized-10" readOnly defaultValue={movie.vote_average} max={10} />
+                                    <Rating name="customized-10" readOnly defaultValue={movie.vote_average} max={10}/>
                                 </Box>
                             </div>
                         </div>
@@ -102,7 +129,13 @@ const MovieInfo = () => {
                                     {!actor.profile_path ?
                                         <Card sx={{maxWidth: 200}} style={{backgroundColor: '#efeaea'}}>
                                             <div
-                                                style={{height: '240px', backgroundColor: '#696868', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                                style={{
+                                                    height: '240px',
+                                                    backgroundColor: '#696868',
+                                                    display: 'flex',
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center'
+                                                }}>
                                                 <ImageNotSupportedOutlinedIcon fontSize={"large"}/>
                                             </div>
                                             <CardContent>
@@ -148,7 +181,15 @@ const MovieInfo = () => {
                 </div>
                 <div style={{padding: '10px', overflow: 'hidden', marginTop: '30px'}}>
                     <Box
-                        sx={{width: '100%', bgcolor: '#333333', color: 'white', borderRadius: '10px', padding: '10px', boxSizing: 'border-box', boxShadow: '0px 1px 2px 0px rgba(110,110,110,1)'}}>
+                        sx={{
+                            width: '100%',
+                            bgcolor: '#333333',
+                            color: 'white',
+                            borderRadius: '10px',
+                            padding: '10px',
+                            boxSizing: 'border-box',
+                            boxShadow: '0px 1px 2px 0px rgba(110,110,110,1)'
+                        }}>
                         <Box sx={{my: 3, mx: 2}}>
                             <Grid container alignItems="center">
                                 <Grid item xs>
@@ -193,15 +234,20 @@ const MovieInfo = () => {
                                    style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
                                 <a>
                                     {movieDetail?.budget ?
-                                            `${movieDetail?.budget} $` :
-                                                    '-'
+                                        `${movieDetail?.budget} $` :
+                                        '-'
                                     }
                                 </a>
                                 <div>
 
                                     {movieDetail?.spoken_languages.map((lang, index) => (
                                         <a key={index}
-                                           style={{backgroundColor: '#212121', padding: '2px 5px 2px 5px', borderRadius: '5px', margin: '0 3px'}}>
+                                           style={{
+                                               backgroundColor: '#212121',
+                                               padding: '2px 5px 2px 5px',
+                                               borderRadius: '5px',
+                                               margin: '0 3px'
+                                           }}>
                                             {lang?.name || '-'}
                                         </a>
                                     ))}
@@ -216,7 +262,11 @@ const MovieInfo = () => {
                             <Stack direction="row" spacing={1}>
                                 {movieDetail?.production_companies.map((company, index) => (
                                     <a key={index}
-                                       style={{backgroundColor: '#212121', padding: '5px 7px 5px 7px', borderRadius: '5px'}}>{company.name || '-'}</a>
+                                       style={{
+                                           backgroundColor: '#212121',
+                                           padding: '5px 7px 5px 7px',
+                                           borderRadius: '5px'
+                                       }}>{company.name || '-'}</a>
                                 ))}
                             </Stack>
                         </Box>
