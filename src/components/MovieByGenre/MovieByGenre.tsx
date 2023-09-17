@@ -23,7 +23,6 @@ const MovieByGenre = () => {
         dispatch(genreActions.setGenreId(id))
         navigate('/movies?page=1');
     }
-    console.log()
     const filterError = () => {
         dispatch(genreActions.setFilterError(true));
     }

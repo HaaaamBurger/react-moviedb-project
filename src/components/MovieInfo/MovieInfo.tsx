@@ -32,7 +32,6 @@ const MovieInfo = () => {
 
     useEffect(() => {
         favourites.map(favMovie => favMovie?.id === +movieId ? setMovieForFavourite(favMovie) : null);
-
     }, []);
 
     const favourites: IMovieDetails[] = JSON.parse(localStorage.getItem('favourites')) || [];

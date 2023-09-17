@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 
 import css from './header.module.css';
 import UndoIcon from '@mui/icons-material/Undo';
+import DeleteOutlineTwoToneIcon from '@mui/icons-material/DeleteOutlineTwoTone';
 
 import {NavLink, useNavigate} from "react-router-dom";
 import {
@@ -20,6 +21,7 @@ import {genreActions, movieActions, themeActions} from "../../redux";
 import {SearchField} from "./searchField";
 import {ErrorField} from "./errorField";
 import {UsedFilter} from "./usedFilter";
+import {FavouriteError} from "./favouriteError";
 
 const MaterialUISwitch = styled(Switch)(({theme}) => ({
     width: 62,
@@ -129,6 +131,15 @@ const Header = () => {
                                     </Button>
                                 </Box> : null
                         }
+                        {
+                            location.pathname === '/favourites' ?
+                                <Button variant="contained" color="error">
+                                <DeleteOutlineTwoToneIcon onClick={() => {
+                                    localStorage.removeItem('favourites');
+                                    navigate('movies')
+                                }}/>
+                                </Button> : null
+                        }
                     </div>
                 </div>
                 <div style={{display: 'flex', alignItems: 'center'}}>
@@ -137,8 +148,11 @@ const Header = () => {
                             <div style={{position: 'fixed'}}>
                                 <ErrorField/>
                             </div>
-                            <div>
+                            <div style={{position: 'fixed'}}>
                                 <UsedFilter/>
+                            </div>
+                            <div>
+                                <FavouriteError/>
                             </div>
                         </div>
                         <NavLink to={'movies?page=1'}>Movies</NavLink>

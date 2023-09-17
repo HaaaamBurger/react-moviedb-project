@@ -4,17 +4,22 @@ import css from '../Movies/movies.module.css'
 
 import {FavMovie} from "./FavMovie";
 import {useNavigate} from "react-router-dom";
+import {useAppDispatch} from "../../hooks";
+import {favouriteActions} from "../../redux";
 
 const Favourites = () => {
-    const [favMovies, setFavMovies] = useState([]);
     const navigate = useNavigate();
+
+    const dispatch = useAppDispatch();
+    const [favMovies, setFavMovies] = useState([]);
 
     useEffect(() => {
         const getFavMovies = JSON.parse(localStorage.getItem('favourites')) || [];
         if (getFavMovies.length) {
             setFavMovies(getFavMovies);
         } else {
-            navigate('/movies')
+            dispatch(favouriteActions.setFavouriteError(true))
+            navigate('/movies');
         }
     }, []);
 
@@ -23,11 +28,6 @@ const Favourites = () => {
             {
                 <div>
                     {favMovies.map((movie, index) => <FavMovie movie={movie} key={index}/>)}
-                    {/*<button  onClick={() => {*/}
-                    {/*    localStorage.removeItem('favourites');*/}
-                    {/*    setFavMovies([]);*/}
-                    {/*}}>Clear*/}
-                    {/*</button>*/}
                 </div>
             }
         </div>
