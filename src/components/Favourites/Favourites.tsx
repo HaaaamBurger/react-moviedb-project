@@ -1,29 +1,34 @@
 import React, {useEffect, useState} from 'react';
-import {NoFavourites} from "./noFavourites";
+
+import css from '../Movies/movies.module.css'
+
+import {FavMovie} from "./FavMovie";
+import {useNavigate} from "react-router-dom";
 
 const Favourites = () => {
     const [favMovies, setFavMovies] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const getFavMovies = JSON.parse(localStorage.getItem('favourites'));
-        if (getFavMovies) {
+        const getFavMovies = JSON.parse(localStorage.getItem('favourites')) || [];
+        if (getFavMovies.length) {
             setFavMovies(getFavMovies);
+        } else {
+            navigate('/movies')
         }
     }, []);
 
     return (
-        <div>
+        <div className={css.moviesWrapper}>
             {
-                favMovies.length ?
-                    <div className={css.favouritesWrapper}>
-                        {favMovies.map((movie, index) => <FavMovie movie={movie} key={index}/>)}
-                        <button className={styles.clearButton} onClick={() => {
-                            localStorage.removeItem('favourites');
-                            setFavMovies([]);
-                        }}>Clear
-                        </button>
-                    </div> :
-                    <NoFavourites/>
+                <div>
+                    {favMovies.map((movie, index) => <FavMovie movie={movie} key={index}/>)}
+                    {/*<button  onClick={() => {*/}
+                    {/*    localStorage.removeItem('favourites');*/}
+                    {/*    setFavMovies([]);*/}
+                    {/*}}>Clear*/}
+                    {/*</button>*/}
+                </div>
             }
         </div>
     );
