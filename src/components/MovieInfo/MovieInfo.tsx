@@ -4,8 +4,8 @@ import css from './movieInfo.module.css';
 import ImageNotSupportedOutlinedIcon from '@mui/icons-material/ImageNotSupportedOutlined';
 import ThumbsUpDownIcon from '@mui/icons-material/ThumbsUpDown';
 import StarIcon from '@mui/icons-material/Star';
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
+// import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+// import BookmarkIcon from '@mui/icons-material/Bookmark';
 
 import {useAppDispatch, useAppLocation, useAppSelector} from "../../hooks";
 import {genreActions, movieActions} from "../../redux";
@@ -20,7 +20,7 @@ const MovieInfo = () => {
     const {genres, movieDetail, actors, movieForSearch} = useAppSelector(state => state.movieReducer)
     const {state: movie} = useAppLocation<IMovie>();
     const [actorsInfo, setActorsInfo] = useState<number>(3);
-    const [movieForFavourite, setMovieForFavourite] = useState<IMovie>(null);
+    // const [movieForFavourite, setMovieForFavourite] = useState<IMovie>(null);
 
     useEffect(() => {
         dispatch(movieActions.allGenres());
@@ -28,12 +28,12 @@ const MovieInfo = () => {
         dispatch(movieActions.allActors({id: movie.id.toString()}));
     }, []);
 
-    useEffect(() => {
-        favourites.map(favMovie => favMovie.id === movie.id ? setMovieForFavourite(favMovie) : null);
+    // useEffect(() => {
+    //     favourites.map(favMovie => favMovie.id === movie.id ? setMovieForFavourite(favMovie) : null);
+    //
+    // }, []);
 
-    }, []);
-
-    const favourites: IMovie[] = JSON.parse(localStorage.getItem('favourites')) || [];
+    // const favourites: IMovie[] = JSON.parse(localStorage.getItem('favourites')) || [];
     const currentMovieGenres: IGenre[] = [];
 
     genres.filter(genre => {
@@ -49,15 +49,15 @@ const MovieInfo = () => {
         dispatch(genreActions.setFilterError(true));
     }
 
-    const addToFav = (movieData: IMovie): void => {
-        favourites.push(movieData);
-        localStorage.setItem('favourites', JSON.stringify(favourites));
-    }
-
-    const removeFromFav = () => {
-        const newFavourites = favourites.filter(favMovie => favMovie.id !== movie.id);
-        localStorage.setItem('favourites', JSON.stringify(newFavourites))
-    }
+    // const addToFav = (movieData: IMovie): void => {
+    //     favourites.push(movieData);
+    //     localStorage.setItem('favourites', JSON.stringify(favourites));
+    // }
+    //
+    // const removeFromFav = () => {
+    //     const newFavourites = favourites.filter(favMovie => favMovie.id !== movie.id);
+    //     localStorage.setItem('favourites', JSON.stringify(newFavourites))
+    // }
 
     return (
         <div>
@@ -71,11 +71,11 @@ const MovieInfo = () => {
                         <div style={{display: 'flex', justifyContent: 'space-between'}}>
                             <h2>{movie.title}</h2>
 
-                            {
-                                !movieForFavourite ?
-                                    <BookmarkBorderIcon style={{fontSize: '34px'}} onClick={() => addToFav(movie)}/> :
-                                        <BookmarkIcon style={{fontSize: '34px'}} onClick={() => removeFromFav()}/>
-                            }
+                            {/*{*/}
+                            {/*    !movieForFavourite ?*/}
+                            {/*        <BookmarkBorderIcon style={{fontSize: '34px'}} onClick={() => addToFav(movie)}/> :*/}
+                            {/*            <BookmarkIcon style={{fontSize: '34px'}} onClick={() => removeFromFav()}/>*/}
+                            {/*}*/}
                         </div>
                         <div className={css.genreBar}>
                             {movie.release_date}・

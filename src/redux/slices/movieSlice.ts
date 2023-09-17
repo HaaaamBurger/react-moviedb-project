@@ -13,7 +13,8 @@ interface IState {
     movieForSearch: string,
     filterMovie: IMovie[],
     movieDetail: IMovieDetails,
-    actors: IActors
+    actors: IActors,
+
 }
 
 const initialState: IState = {
@@ -28,7 +29,8 @@ const initialState: IState = {
     movieForSearch: null,
     filterMovie: [],
     movieDetail: null,
-    actors: null
+    actors: null,
+
 }
 
 const allActors = createAsyncThunk<IActors, {id: string}>(
@@ -102,6 +104,7 @@ const movieSlice = createSlice({
         setFilterMovie: (state, action) => {
             state.filterMovie = action.payload
         }
+
     },
     extraReducers: builder => builder
         .addCase(allMovies.fulfilled, (state, action) => {

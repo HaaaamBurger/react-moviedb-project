@@ -14,7 +14,7 @@ const Movies = () => {
     const navigate = useNavigate();
 
     const {genreMovies, genreId} = useAppSelector(state => state.genreReducer)
-    const {movies, errRespond, movieForSearch, filterMovie,} = useAppSelector(state => state.movieReducer);
+    const {movies, errRespond, movieForSearch, filterMovie} = useAppSelector(state => state.movieReducer);
     const [query, setQuery] = useSearchParams({page: '1'});
 
     useEffect(() => {
