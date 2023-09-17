@@ -1,6 +1,7 @@
 import {createBrowserRouter, Navigate} from 'react-router-dom';
 import {MovieMainLayout} from "../layouts";
 import {ErrorPage, FavouritesPage, GenresPage, MovieInfoPage, MoviesPage} from "../pages";
+import {FavouritePageAccess} from "../hoc";
 
 const router = createBrowserRouter([
     {
@@ -26,7 +27,8 @@ const router = createBrowserRouter([
             },
             {
                 path: 'favourites',
-                element: <FavouritesPage/>
+                // element: <FavouritesPage/>
+                element: <FavouritePageAccess><FavouritesPage/></FavouritePageAccess>
             }
         ]
     }

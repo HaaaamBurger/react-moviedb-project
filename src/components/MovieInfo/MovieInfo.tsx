@@ -20,15 +20,18 @@ const MovieInfo = () => {
     const { movieDetail, actors, movieForSearch} = useAppSelector(state => state.movieReducer)
 
     const [actorsInfo, setActorsInfo] = useState<number>(3);
-    const [value, setValue] = useState<number | null>(movieDetail?.vote_average);
+    const [value, setValue] = useState<number | null>(0);
     const [movieForFavourite, setMovieForFavourite] = useState<IMovieDetails>(null);
+
+
+    useEffect(() => {
+        setValue(movieDetail?.vote_average)
+    }, [movieDetail]);
 
     useEffect(() => {
         dispatch(movieActions.allMovieDetails({id: movieId}))
         dispatch(movieActions.allActors({id: movieId}));
     }, [movieId]);
-
-    console.log(movieDetail)
 
     useEffect(() => {
         favourites.map(favMovie => favMovie?.id === +movieId ? setMovieForFavourite(favMovie) : null);
@@ -219,7 +222,8 @@ const MovieInfo = () => {
                             <Stack direction="row" spacing={1}>
                                 {movieDetail?.genres.map((genre, index) => (
                                     <Chip label={genre.name} key={index} color={'warning'}
-                                          onClick={!movieForSearch ? () => genreHandler(genre.id.toString()) : error}/>
+                                          onClick={!movieForSearch ? () => genreHandler(genre.id.toString()) : error}
+                                    />
                                 ))}
                             </Stack>
                         </Box>

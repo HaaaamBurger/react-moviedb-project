@@ -133,11 +133,11 @@ const Header = () => {
                         }
                         {
                             location.pathname === '/favourites' ?
-                                <Button variant="contained" color="error">
-                                <DeleteOutlineTwoToneIcon onClick={() => {
+                                <Button variant="contained" color="error" onClick={() => {
                                     localStorage.removeItem('favourites');
                                     navigate('movies')
-                                }}/>
+                                }}>
+                                <DeleteOutlineTwoToneIcon />
                                 </Button> : null
                         }
                     </div>
